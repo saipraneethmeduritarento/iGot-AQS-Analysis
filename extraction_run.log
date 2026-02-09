@@ -1,0 +1,30 @@
+2026-02-04 17:42:09,611 - INFO - Loaded 6 course IDs from courses_with_assessnemt.txt
+2026-02-04 17:42:09,612 - INFO - 
+Starting extraction for 6 courses...
+2026-02-04 17:42:09,612 - INFO - Output directory: data/extracted_content
+
+2026-02-04 17:42:09,612 - INFO - 
+[1/6] Processing do_1136238739591168001278...
+2026-02-04 17:42:09,612 - INFO - 
+================================================================================
+2026-02-04 17:42:09,612 - INFO - Processing course: do_1136238739591168001278
+2026-02-04 17:42:09,612 - INFO - ================================================================================
+2026-02-04 17:42:09,696 - INFO - Hierarchy API requires auth, using search API...
+2026-02-04 17:42:20,584 - ERROR - Failed to fetch via search API: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+2026-02-04 17:42:20,584 - WARNING - Could not fetch hierarchy for do_1136238739591168001278
+2026-02-04 17:42:22,584 - INFO - 
+[2/6] Processing do_1143470901356625921827...
+2026-02-04 17:42:22,584 - INFO - 
+================================================================================
+2026-02-04 17:42:22,584 - INFO - Processing course: do_1143470901356625921827
+2026-02-04 17:42:22,584 - INFO - ================================================================================
+2026-02-04 17:42:22,634 - INFO - Hierarchy API requires auth, using search API...
+2026-02-04 17:42:33,358 - ERROR - Failed to fetch via search API: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+2026-02-04 17:42:33,358 - WARNING - Could not fetch hierarchy for do_1143470901356625921827
+2026-02-04 17:42:35,359 - INFO - 
+[3/6] Processing do_1142748906596843521455...
+2026-02-04 17:42:35,359 - INFO - 
+================================================================================
+2026-02-04 17:42:35,359 - INFO - Processing course: do_1142748906596843521455
+2026-02-04 17:42:35,359 - INFO - ================================================================================
+2026-02-04 17:42:35,398 - INFO - Hierarchy API requires auth, using search API...

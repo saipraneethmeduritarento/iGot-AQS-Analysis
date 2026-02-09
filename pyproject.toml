@@ -1,0 +1,24 @@
+[project]
+name = "assessment-quality-score"
+version = "0.1.0"
+description = "Assessment Quality Score (AQS) system for evaluating educational assessments on the iGOT platform"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "bs4>=0.0.2",
+    "google-cloud-aiplatform>=1.38.0",
+    "google-generativeai>=0.3.0",
+    "pypdf>=5.0.0",
+    "pydantic-settings>=2.0.0",
+    "pyyaml>=6.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.scripts]
+aqs = "main:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.0.0",
+]

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fetch PDF by Course</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 20px auto;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .video-item {
+      margin-bottom: 25px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #loaderModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #loaderContent {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    input[type="file"],
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    a.batch-link {
+      display: block;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Download PDF by Course</h1>
+
+  <label><strong>Upload Excel file:</strong></label>
+  <input type="text" id="contentIdsInput" placeholder="course_001
+  course_002
+  course_003"></input>
+  <label><strong>Batch Size:</strong></label>
+  <input type="number" id="batchSize" placeholder="e.g., 5" value="5" />
+
+  <button id="fetchBtn">Fetch PDFs</button>
+
+  <p id="status"></p>
+  <div id="results"></div>
+
+  <div id="loaderModal">
+    <div id="loaderContent">
+      <p><strong>Processing...</strong></p>
+      <p id="progressText">0 / 0 courses processed.</p>
+    </div>
+  </div>
+
+  <script>
+    const courseApiHeaders = {
+      'accept': 'application/json, text/plain, */*',
+      'authorization': '',
+      'org': 'dopt',
+      'rootorg': 'igot',
+      'locale': 'en',
+      'hostpath': 'portal.uat.karmayogibharat.net'
+    }
+
+    const fetchBtn = document.getElementById('fetchBtn')
+    const statusEl = document.getElementById('status')
+    const resultsEl = document.getElementById('results')
+    const excelFileInput = document.getElementById('excelFile')
+    const sheetNameInput = document.getElementById('sheetName')
+    const columnNameInput = document.getElementById('columnName')
+    const batchSizeInput = document.getElementById('batchSize')
+    const loaderModal = document.getElementById('loaderModal')
+    const progressText = document.getElementById('progressText')
+
+    function showLoader(message) {
+      loaderModal.style.display = 'flex'
+      progressText.textContent = message || 'Processing...'
+    }
+
+    function updateLoaderProgress(processed, total) {
+      progressText.textContent = `${processed} / ${total} courses processed...`
+    }
+
+    function hideLoader() {
+      loaderModal.style.display = 'none'
+    }
+
+    function htmlToPlainText(htmlString) {
+      let text = htmlString.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+      text = text.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+      text = text.replace(/<[^>]+>/g, '')
+      text = text.replace(/&nbsp;/gi, ' ')
+        .replace(/&amp;/gi, '&')
+        .replace(/&quot;/gi, '"')
+        .replace(/&#39;/gi, "'")
+        .replace(/&lt;/gi, '<')
+        .replace(/&gt;/gi, '>')
+      return text.replace(/\s+/g, ' ').trim()
+    }
+
+    function extractMetadata(node) {
+      if (!node || typeof node !== 'object') return node
+
+      const { identifier, name, description, keywords, organisation, courseCategory } = node
+      const competenciesArray = (node.competencies_v6 || []).map(c =>
+        [c.competencyAreaName].filter(Boolean).join(' > ')
+      )
+
+      const result = {
+        identifier: identifier || '',
+        name: name || 'N/A',
+        description: description || '',
+        keywords: keywords || [],
+        organisation: organisation?.[0] || 'N/A',
+        competencies_v6: competenciesArray.join('\n') || '',
+        instructions: htmlToPlainText(node.instructions || ''),
+        courseCategory: courseCategory,
+        scorm: false
+      }
+
+      return result
+    }
+
+    function findPDFResources(node, foundPDFs = []) {
+      if (!node) return foundPDFs
+      if (node.mimeType === 'application/pdf' && node.artifactUrl) {
+        foundPDFs.push({ name: node.name || 'Unnamed PDF', url: node.artifactUrl })
+      }
+      if (node.children && Array.isArray(node.children)) {
+        node.children.forEach(child => findPDFResources(child, foundPDFs))
+      }
+      return foundPDFs
+    }
+
+    function findVideoMP4Children(node, foundVideos = []) {
+      if (!node) return foundVideos
+      if (node.mimeType === 'video/mp4') foundVideos.push(node)
+      if (node.children && Array.isArray(node.children)) {
+        node.children.forEach(child => findVideoMP4Children(child, foundVideos))
+      }
+      return foundVideos
+    }
+
+    function findVTTUrls(obj, found = []) {
+      if (typeof obj === 'string' && obj.endsWith('.vtt')) {
+        found.push(obj)
+      } else if (Array.isArray(obj)) {
+        obj.forEach(item => findVTTUrls(item, found))
+      } else if (typeof obj === 'object' && obj !== null) {
+        Object.values(obj).forEach(value => findVTTUrls(value, found))
+      }
+      return found
+    }
+
+    function findAssessmentNodes(node, foundAssessments = []) {
+      if (!node) return foundAssessments
+      if (node.mimeType === 'application/json' && node.name && node.name.toLowerCase().includes('assessment')) {
+        foundAssessments.push(node)
+      }
+      if (node.children && Array.isArray(node.children)) {
+        node.children.forEach(child => findAssessmentNodes(child, foundAssessments))
+      }
+      return foundAssessments
+    }
+
+    async function extractAssessmentContent(assessmentNode) {
+      try {
+        if (!assessmentNode.artifactUrl) return null
+        const resp = await fetch(assessmentNode.artifactUrl)
+        if (!resp.ok) return null
+        const assessmentData = await resp.json()
+        
+        // Parse assessment structure - handle different formats
+        const questions = []
+        
+        if (assessmentData.assessment && Array.isArray(assessmentData.assessment)) {
+          // Format: { assessment: [{...}, {...}] }
+          assessmentData.assessment.forEach((q, idx) => {
+            questions.push({
+              questionNumber: idx + 1,
+              questionText: q.question || q.text || 'N/A',
+              questionType: q.type || 'N/A',
+              options: (q.options || q.choices || []).map(opt => 
+                typeof opt === 'string' ? opt : (opt.text || opt.label || JSON.stringify(opt))
+              ),
+              correctAnswers: q.correctAnswers || q.answer || q.correct || [],
+              explanation: q.explanation || ''
+            })
+          })
+        } else if (assessmentData.questions && Array.isArray(assessmentData.questions)) {
+          // Format: { questions: [{...}, {...}] }
+          assessmentData.questions.forEach((q, idx) => {
+            questions.push({
+              questionNumber: idx + 1,
+              questionText: q.question || q.text || 'N/A',
+              questionType: q.type || 'N/A',
+              options: (q.options || q.choices || []).map(opt =>
+                typeof opt === 'string' ? opt : (opt.text || opt.label || JSON.stringify(opt))
+              ),
+              correctAnswers: q.correctAnswers || q.answer || q.correct || [],
+              explanation: q.explanation || ''
+            })
+          })
+        } else if (Array.isArray(assessmentData)) {
+          // Format: [{...}, {...}] directly
+          assessmentData.forEach((q, idx) => {
+            questions.push({
+              questionNumber: idx + 1,
+              questionText: q.question || q.text || 'N/A',
+              questionType: q.type || 'N/A',
+              options: (q.options || q.choices || []).map(opt =>
+                typeof opt === 'string' ? opt : (opt.text || opt.label || JSON.stringify(opt))
+              ),
+              correctAnswers: q.correctAnswers || q.answer || q.correct || [],
+              explanation: q.explanation || ''
+            })
+          })
+        }
+        
+        return {
+          assessmentName: assessmentNode.name,
+          totalQuestions: questions.length,
+          questions: questions,
+          rawData: assessmentData
+        }
+      } catch (err) {
+        console.error('Assessment extraction failed:', err)
+        return null
+      }
+    }
+
+    function formatAssessmentAsText(assessmentData) {
+      if (!assessmentData) return ''
+      let text = `# Assessment: ${assessmentData.assessmentName}\n`
+      text += `Total Questions: ${assessmentData.totalQuestions}\n\n`
+      text += `${'='.repeat(80)}\n\n`
+      
+      assessmentData.questions.forEach(q => {
+        text += `Question ${q.questionNumber}: ${q.questionText}\n`
+        text += `Type: ${q.questionType}\n\n`
+        text += `Options:\n`
+        q.options.forEach((opt, i) => {
+          text += `  ${String.fromCharCode(65 + i)}) ${opt}\n`
+        })
+        text += `\nCorrect Answer(s): ${Array.isArray(q.correctAnswers) ? q.correctAnswers.join(', ') : q.correctAnswers}\n`
+        if (q.explanation) {
+          text += `Explanation: ${q.explanation}\n`
+        }
+        text += `\n${'-'.repeat(80)}\n\n`
+      })
+      
+      return text
+    }
+
+    function parseContentIdsFromInput(text) {
+      return text
+        .split(/[\n,]/)
+        .map(id => id.trim())
+        .filter(Boolean)
+    }
+
+
+    async function readExcelFile(file, sheetName, columnName) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          const data = new Uint8Array(e.target.result)
+          const workbook = XLSX.read(data, { type: 'array' })
+          const sheet = workbook.Sheets[sheetName]
+          if (!sheet) return reject(`Sheet "${sheetName}" not found`)
+          const json = XLSX.utils.sheet_to_json(sheet, { defval: '' })
+          const identifiers = json.map(row => row[columnName]).filter(Boolean)
+          resolve(identifiers)
+        }
+        reader.onerror = (err) => reject(err)
+        reader.readAsArrayBuffer(file)
+      })
+    }
+
+    fetchBtn.addEventListener('click', async () => {
+      resultsEl.innerHTML = ''
+      statusEl.textContent = ''
+
+
+      const batchSize = parseInt(batchSizeInput.value) || 5
+
+      let identifiers = parseContentIdsFromInput(contentIdsInput.value)
+      console.log('identifiers--', identifiers)
+
+      if (identifiers.length === 0) return alert('No identifiers found in the specified column.')
+
+      showLoader(`Processing 0 / ${identifiers.length} courses...`)
+
+      let totalProcessed = 0
+
+      for (let batchStart = 0; batchStart < identifiers.length; batchStart += batchSize) {
+        const batch = identifiers.slice(batchStart, batchStart + batchSize)
+        const zip = new JSZip()
+        console.log('batch--', batch)
+        for (let i = 0; i < batch.length; i++) {
+          const courseId = batch[i]
+          totalProcessed++
+          updateLoaderProgress(totalProcessed, identifiers.length)
+
+          const searchUrl = "https://igotkarmayogi.gov.in/api/content/v1/search"
+          const body = {
+            request: {
+              filters: { identifier: courseId },
+              isSecureSettingsDisabled: true,
+              status: ["Live"],
+              query: "",
+              fields: [],
+              sort_by: { lastUpdatedOn: "desc" },
+              limit: 1000,
+            },
+          }
+
+          try {
+            const searchResp = await fetch(searchUrl, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", ...courseApiHeaders },
+              body: JSON.stringify(body),
+            })
+
+            if (!searchResp.ok) throw new Error(`HTTP ${searchResp.status}`)
+            const searchData = await searchResp.json()
+            const rootNode = searchData.result?.content?.[0]
+            if (!rootNode) throw new Error("No rootNode found in search result")
+
+            // ✅ Create rootContent folder
+            const rootContentFolder = zip.folder(rootNode.identifier || courseId)
+            const courseName = rootNode.name || courseId
+
+            // PDFs, metadata, subtitles for root
+            const pdfs = findPDFResources(rootNode)
+            const pdfLinksList = []
+            for (const pdf of pdfs) {
+              try {
+                const pdfResp = await fetch(pdf.url)
+                if (!pdfResp.ok) throw new Error(`Failed to fetch PDF`)
+                const blob = await pdfResp.blob()
+                rootContentFolder.file(pdf.name + ".pdf", blob)
+                pdfLinksList.push(`${pdf.name} - ${pdf.url}`)
+              } catch (err) {
+                pdfLinksList.push(`${pdf.name} - [FAILED] ${pdf.url}`)
+              }
+            }
+            rootContentFolder.file("pdf_links.txt", pdfLinksList.join("\n"))
+            rootContentFolder.file("metadata.json", JSON.stringify(extractMetadata(rootNode), null, 2))
+
+            // 🎥 Videos in root
+            const videos = findVideoMP4Children(rootNode)
+            let courseEnglishVTT = ""
+            for (const video of videos) {
+              const videoId = video.identifier || video.id
+              const videoFolder = rootContentFolder.folder(video.name || videoId)
+              try {
+                const statsUrl = `https://learning-ai.prod.karmayogibharat.net/api/kb-pipeline/v3/transcoder/stats?resource_id=${encodeURIComponent(videoId)}`
+                const statsResp = await fetch(statsUrl)
+                if (!statsResp.ok) throw new Error("Stats fetch failed")
+                const statsData = await statsResp.json()
+                const vttUrls = findVTTUrls(statsData)
+                for (const vttUrl of vttUrls) {
+                  const langMatch = vttUrl.match(/\/([a-z]{2})\//i)
+                  const langCode = langMatch ? langMatch[1].toLowerCase() : "unknown"
+                  if (langCode !== "en") continue
+                  const vttResp = await fetch(vttUrl)
+                  if (!vttResp.ok) continue
+                  const vttText = await vttResp.text()
+                  const filename = vttUrl.split("/").pop() || "subtitle.vtt"
+                  videoFolder.folder(langCode).file(filename, vttText)
+                  courseEnglishVTT += `\n\nNOTE: From video "${video.name || videoId}" - ${filename}\n\n${vttText.trim()}\n`
+                }
+              } catch { }
+            }
+            rootContentFolder.file("english_subtitles.vtt", courseEnglishVTT.trim() || "// No English subtitles found")
+
+            // 📋 Assessments in root
+            const assessments = findAssessmentNodes(rootNode)
+            let assessmentIndex = 1
+            for (const assessment of assessments) {
+              try {
+                const assessmentData = await extractAssessmentContent(assessment)
+                if (assessmentData) {
+                  const assessmentFolder = rootContentFolder.folder(`Assessment_${assessmentIndex}`)
+                  assessmentFolder.file('assessment.json', JSON.stringify(assessmentData.rawData, null, 2))
+                  assessmentFolder.file('assessment_parsed.json', JSON.stringify(assessmentData, null, 2))
+                  assessmentFolder.file('assessment_questions.txt', formatAssessmentAsText(assessmentData))
+                  assessmentIndex++
+                }
+              } catch (err) {
+                console.error("Assessment processing failed:", err)
+              }
+            }
+
+            // ✅ Process leaf nodes (put inside rootContent)
+            const leafNodes = rootNode.leafNodes || []
+            for (const leafCourseId of leafNodes) {
+              try {
+                const subBody = {
+                  request: {
+                    filters: { identifier: leafCourseId },
+                    isSecureSettingsDisabled: true,
+                    status: ["Live"],
+                    query: "",
+                    fields: [],
+                    sort_by: { lastUpdatedOn: "desc" },
+                    limit: 1000,
+                  },
+                }
+                const subResp = await fetch(searchUrl, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json", ...courseApiHeaders },
+                  body: JSON.stringify(subBody),
+                })
+                if (!subResp.ok) throw new Error(`HTTP ${subResp.status}`)
+                const subData = await subResp.json()
+                const courseRoot = subData.result?.content?.[0]
+                if (!courseRoot) continue
+
+                const courseFolder = rootContentFolder.folder(courseRoot.identifier)
+                const pdfs2 = findPDFResources(courseRoot)
+                const pdfLinksList2 = []
+                for (const pdf of pdfs2) {
+                  try {
+                    const pdfResp = await fetch(pdf.url)
+                    if (!pdfResp.ok) throw new Error(`Failed to fetch PDF`)
+                    const blob = await pdfResp.blob()
+                    courseFolder.file(pdf.name + ".pdf", blob)
+                    pdfLinksList2.push(`${pdf.name} - ${pdf.url}`)
+                  } catch (err) {
+                    pdfLinksList2.push(`${pdf.name} - [FAILED] ${pdf.url}`)
+                  }
+                }
+                courseFolder.file("pdf_links.txt", pdfLinksList2.join("\n"))
+                courseFolder.file("metadata.json", JSON.stringify(extractMetadata(courseRoot), null, 2))
+
+                const videos2 = findVideoMP4Children(courseRoot)
+                let englishVTT = ""
+                for (const video of videos2) {
+                  const videoId = video.identifier || video.id
+                  const videoFolder = courseFolder.folder(video.name || videoId)
+                  try {
+                    const statsUrl = `https://learning-ai.prod.karmayogibharat.net/api/kb-pipeline/v3/transcoder/stats?resource_id=${encodeURIComponent(videoId)}`
+                    const statsResp = await fetch(statsUrl)
+                    if (!statsResp.ok) throw new Error("Stats fetch failed")
+                    const statsData = await statsResp.json()
+                    const vttUrls = findVTTUrls(statsData)
+                    for (const vttUrl of vttUrls) {
+                      const langMatch = vttUrl.match(/\/([a-z]{2})\//i)
+                      const langCode = langMatch ? langMatch[1].toLowerCase() : "unknown"
+                      if (langCode !== "en") continue
+                      const vttResp = await fetch(vttUrl)
+                      if (!vttResp.ok) continue
+                      const vttText = await vttResp.text()
+                      const filename = vttUrl.split("/").pop() || "subtitle.vtt"
+                      videoFolder.folder(langCode).file(filename, vttText)
+                      englishVTT += `\n\nNOTE: From video "${video.name || videoId}" - ${filename}\n\n${vttText.trim()}\n`
+                    }
+                  } catch { }
+                }
+                courseFolder.file("english_subtitles.vtt", englishVTT.trim() || "// No English subtitles found")
+              } catch (err) {
+                console.error("Video processing failed", err)
+              }
+            }
+
+            // 📋 Assessments in leaf node
+            const leafAssessments = findAssessmentNodes(courseRoot)
+            let leafAssessmentIndex = 1
+            for (const assessment of leafAssessments) {
+              try {
+                const assessmentData = await extractAssessmentContent(assessment)
+                if (assessmentData) {
+                  const assessmentFolder = courseFolder.folder(`Assessment_${leafAssessmentIndex}`)
+                  assessmentFolder.file('assessment.json', JSON.stringify(assessmentData.rawData, null, 2))
+                  assessmentFolder.file('assessment_parsed.json', JSON.stringify(assessmentData, null, 2))
+                  assessmentFolder.file('assessment_questions.txt', formatAssessmentAsText(assessmentData))
+                  leafAssessmentIndex++
+                }
+              } catch (err) {
+                console.error("Assessment processing failed:", err)
+              }
+              } catch (err) {
+                console.error("Leaf processing failed", err)
+              }
+            }
+
+            const div = document.createElement("div")
+            div.className = "video-item"
+            div.innerHTML = `<strong>${courseName}</strong><br />${pdfs.length} PDF(s) found.`
+            resultsEl.appendChild(div)
+          } catch (err) {
+            console.error("Search request failed:", err)
+          }
+        }
+
+        // Generate zip for this batch
+        const zipBlob = await zip.generateAsync({ type: 'blob' })
+        const zipUrl = URL.createObjectURL(zipBlob)
+        const a = document.createElement('a')
+        a.href = zipUrl
+        a.download = `batch_${batchStart + 1}_to_${Math.min(batchStart + batchSize, identifiers.length)}.zip`
+        a.textContent = `Download batch ${batchStart + 1} - ${Math.min(batchStart + batchSize, identifiers.length)}`
+        a.className = 'batch-link'
+        resultsEl.appendChild(a)
+      }
+
+      hideLoader()
+      statusEl.textContent = `Processing complete. Total courses: ${identifiers.length}`
+    });
+  </script>
+</body>
+
+</html>

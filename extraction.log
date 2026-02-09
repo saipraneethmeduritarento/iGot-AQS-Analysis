@@ -1,0 +1,338 @@
+2026-02-04 22:51:36,660 - INFO - Loaded 6 course IDs from /home/saipraneethmeduri/Desktop/Projects/Projects/Assessment_quality_score/courses_with_assessnemt.txt
+2026-02-04 22:51:36,660 - INFO - Starting extraction of 6 courses
+2026-02-04 22:51:36,660 - INFO - Output directory: /home/saipraneethmeduri/Desktop/Projects/Projects/Assessment_quality_score/data/data_with_assessment
+
+2026-02-04 22:51:36,660 - INFO - Processing course: do_1136238739591168001278
+2026-02-04 22:51:36,785 - INFO - Created folder: /home/saipraneethmeduri/Desktop/Projects/Projects/Assessment_quality_score/data/data_with_assessment/do_1136238739591168001278
+2026-02-04 22:51:36,788 - INFO - Saved metadata.json
+2026-02-04 22:51:36,810 - INFO - Extracted assessment 1: 10 questions
+2026-02-04 22:51:36,859 - INFO - Processed leaf node: State Engagement
+2026-02-04 22:51:36,901 - INFO - Processed leaf node: Tools for Efficient Planning and Decision Making
+2026-02-04 22:51:37,116 - INFO - Processed leaf node: Roles and Responsibilities of Stakeholders in Project Monitoring Frame
+2026-02-04 22:51:37,183 - INFO - Processed leaf node: Project Monitoring Group Portal
+2026-02-04 22:51:37,231 - INFO - Processed leaf node: Introduction of PM Gatishakti
+2026-02-04 22:51:37,309 - INFO - Extracted leaf assessment: 10 questions
+2026-02-04 22:51:37,310 - INFO - Processed leaf node: Assessment
+2026-02-04 22:51:37,310 - INFO - ✓ Successfully processed course: do_1136238739591168001278
+
+2026-02-04 22:51:37,310 - INFO - Processing course: do_1143470901356625921827
+2026-02-04 22:51:37,363 - INFO - Created folder: /home/saipraneethmeduri/Desktop/Projects/Projects/Assessment_quality_score/data/data_with_assessment/do_1143470901356625921827
+2026-02-04 22:51:37,364 - INFO - Saved metadata.json
+2026-02-04 22:51:37,696 - WARNING - Failed to fetch question do_114347165512843264114109: 404
+2026-02-04 22:51:39,139 - INFO - Extracted assessment 1: 24 questions
+2026-02-04 22:51:39,181 - INFO - Processed leaf node: Natural Language Processing and Gen AI
+2026-02-04 22:51:39,244 - INFO - Processed leaf node: Introduction to Emerging Technologies
+2026-02-04 22:51:39,288 - INFO - Processed leaf node: Artificial Intelligence  Machine Learning  and Deep Learning
+2026-02-04 22:51:39,331 - INFO - Processed leaf node: Augmented Reality Virtual Reality Mixed Reality
+2026-02-04 22:51:39,375 - INFO - Processed leaf node: Computer Vision
+2026-02-04 22:51:39,426 - INFO - Processed leaf node: Internet of Things
+2026-02-04 22:51:39,639 - WARNING - Failed to fetch question do_114347165512843264114109: 404
+2026-02-04 22:51:41,001 - INFO - Extracted leaf assessment: 24 questions
+2026-02-04 22:51:41,001 - INFO - Processed leaf node: Final Assessment
+2026-02-04 22:51:41,043 - INFO - Processed leaf node: Drone Technology
+2026-02-04 22:51:41,085 - INFO - Processed leaf node: Blockchain
+2026-02-04 22:51:41,128 - INFO - Processed leaf node: Data Analytics
+2026-02-04 22:51:41,129 - INFO - ✓ Successfully processed course: do_1143470901356625921827
+
+2026-02-04 22:51:41,130 - INFO - Processing course: do_1142748906596843521455
+2026-02-04 22:51:41,175 - INFO - Created folder: /home/saipraneethmeduri/Desktop/Projects/Projects/Assessment_quality_score/data/data_with_assessment/do_1142748906596843521455
+2026-02-04 22:51:41,176 - INFO - Saved metadata.json
+2026-02-04 22:51:41,399 - INFO - Processed video: AI Policies and Governance in India 
+2026-02-04 22:51:41,399 - INFO - Saved English subtitles
+2026-02-04 22:51:41,611 - WARNING - Failed to fetch question do_11427696342414950419245: 404
+2026-02-04 22:51:42,097 - INFO - Extracted assessment 1: 10 questions
+2026-02-04 22:51:42,201 - INFO - Processed leaf node: AI Policies and Governance in India 
+2026-02-04 22:51:42,388 - WARNING - Failed to fetch question do_11427696342414950419245: 404
+2026-02-04 22:51:43,135 - INFO - Extracted leaf assessment: 10 questions
+2026-02-04 22:51:43,135 - INFO - Processed leaf node: Final Assessment
+2026-02-04 22:51:43,135 - INFO - ✓ Successfully processed course: do_1142748906596843521455
+
+2026-02-04 22:51:43,136 - INFO - Processing course: do_114141193899892736139
+2026-02-04 22:51:43,199 - INFO - Created folder: /home/saipraneethmeduri/Desktop/Projects/Projects/Assessment_quality_score/data/data_with_assessment/do_114141193899892736139
+2026-02-04 22:51:43,200 - INFO - Saved metadata.json
+2026-02-04 22:51:43,247 - INFO - Processed video: What Is Data Science
+2026-02-04 22:51:43,291 - INFO - Processed video: Course Introduction
+2026-02-04 22:51:43,331 - INFO - Processed video: Stages of a Data Science Project
+2026-02-04 22:51:43,371 - INFO - Processed video: Roles in a Data Science Project
+2026-02-04 22:51:43,414 - INFO - Processed video: Tools of the Trade
+2026-02-04 22:51:43,454 - INFO - Processed video: Applications of Data Science
+2026-02-04 22:51:43,493 - INFO - Processed video: Introduction to Structured Thinking
+2026-02-04 22:51:43,535 - INFO - Processed video: Various steps of Problem Solving
+2026-02-04 22:51:43,574 - INFO - Processed video: Structured Thinking and Problem Solving
+2026-02-04 22:51:43,614 - INFO - Processed video: Fireside Chat
+2026-02-04 22:51:43,653 - INFO - Processed video: Framing the Problem Statement
+2026-02-04 22:51:43,694 - INFO - Processed video: The Common Pitfalls  The Loop Trap
+2026-02-04 22:51:43,734 - INFO - Processed video: The Common Pitfalls  The Complexity Trap
+2026-02-04 22:51:43,773 - INFO - Processed video: The Common Pitfalls  The Obvious Trap
+2026-02-04 22:51:43,812 - INFO - Processed video: Defining a Problem Statement Worksheet
+2026-02-04 22:51:43,853 - INFO - Processed video: How the PSW Helps in Defining a Problem Statement
+2026-02-04 22:51:43,893 - INFO - Processed video: Mutually Exclusive and Collectively Exhaustive (MECE)
+2026-02-04 22:51:43,934 - INFO - Processed video: What is an Issue Tree
+2026-02-04 22:51:43,974 - INFO - Processed video: Creating an Issue Tree
+2026-02-04 22:51:44,015 - INFO - Processed video: Documenting the Implementation Phase
+2026-02-04 22:51:44,055 - INFO - Processed video: The Adoption Plan
+2026-02-04 22:51:44,095 - INFO - Processed video: Metrics for Evaluation 1
+2026-02-04 22:51:44,136 - INFO - Processed video: Metrics for Evaluation 2
+2026-02-04 22:51:44,176 - INFO - Processed video: Creating User Research for Insights
+2026-02-04 22:51:44,215 - INFO - Processed video: Common Design Pitfalls
+2026-02-04 22:51:44,254 - INFO - Processed video: Common Strategic Pitfalls
+2026-02-04 22:51:44,294 - INFO - Processed video: Phases of Testing a DS Project
+2026-02-04 22:51:44,333 - INFO - Processed video: Human-Centered Design (HCD) and Empathy
+2026-02-04 22:51:44,374 - INFO - Processed video: What is HCD
+2026-02-04 22:51:44,413 - INFO - Processed video: The Discovery Phase
+2026-02-04 22:51:44,454 - INFO - Processed video: The Solution Phase
+2026-02-04 22:51:44,495 - INFO - Processed video: Fireside Chat with Biju Dominic
+2026-02-04 22:51:44,496 - INFO - Saved English subtitles
+2026-02-04 22:51:44,830 - WARNING - Failed to fetch question do_114143337777856512130: 404
+2026-02-04 22:51:45,043 - INFO - Extracted assessment 1: 5 questions
+2026-02-04 22:51:45,202 - WARNING - Failed to fetch question do_114143341889093632139: 404
+2026-02-04 22:51:45,402 - INFO - Extracted assessment 2: 5 questions
+2026-02-04 22:51:45,558 - WARNING - Failed to fetch question do_114143346572066816140: 404
+2026-02-04 22:51:45,775 - INFO - Extracted assessment 3: 5 questions
+2026-02-04 22:51:45,923 - WARNING - Failed to fetch question do_114143350231040000157: 404
+2026-02-04 22:51:46,589 - INFO - Extracted assessment 4: 12 questions
+2026-02-04 22:51:46,676 - INFO - Processed leaf node: Fireside Chat
+2026-02-04 22:51:46,770 - INFO - Processed leaf node: Creating User Research for Insights
+2026-02-04 22:51:46,857 - INFO - Processed leaf node: How the PSW Helps in Defining a Problem Statement
+2026-02-04 22:51:46,944 - INFO - Processed leaf node: What is an Issue Tree
+2026-02-04 22:51:47,025 - INFO - Processed leaf node: Roles in a Data Science Project
+2026-02-04 22:51:47,113 - INFO - Processed leaf node: The Solution Phase
+2026-02-04 22:51:47,203 - INFO - Processed leaf node: The Common Pitfalls  The Complexity Trap
+2026-02-04 22:51:47,297 - INFO - Processed leaf node: Creating an Issue Tree
+2026-02-04 22:51:47,397 - INFO - Processed leaf node: Documenting the Implementation Phase
+2026-02-04 22:51:47,551 - INFO - Processed leaf node: Metrics for Evaluation 2
+2026-02-04 22:51:47,649 - INFO - Processed leaf node: Mutually Exclusive and Collectively Exhaustive (MECE)
+2026-02-04 22:51:47,734 - INFO - Processed leaf node: Phases of Testing a DS Project
+2026-02-04 22:51:47,821 - INFO - Processed leaf node: Introduction to Structured Thinking
+2026-02-04 22:51:47,913 - INFO - Processed leaf node: Fireside Chat with Biju Dominic
+2026-02-04 22:51:48,010 - INFO - Processed leaf node: What Is Data Science
+2026-02-04 22:51:48,205 - WARNING - Failed to fetch question do_114143337777856512130: 404
+2026-02-04 22:51:48,408 - INFO - Extracted leaf assessment: 5 questions
+2026-02-04 22:51:48,408 - INFO - Processed leaf node: Practice assignment
+2026-02-04 22:51:48,731 - INFO - Processed leaf node: Course Introduction
+2026-02-04 22:51:48,818 - INFO - Processed leaf node: Structured Thinking and Problem Solving
+2026-02-04 22:51:49,035 - INFO - Processed leaf node: Metrics for Evaluation 1
+2026-02-04 22:51:49,128 - INFO - Processed leaf node: Stages of a Data Science Project
+2026-02-04 22:51:49,215 - INFO - Processed leaf node: Tools of the Trade
+2026-02-04 22:51:49,296 - INFO - Processed leaf node: Various steps of Problem Solving
+2026-02-04 22:51:49,519 - WARNING - Failed to fetch question do_114143346572066816140: 404
+2026-02-04 22:51:49,749 - INFO - Extracted leaf assessment: 5 questions
+2026-02-04 22:51:49,749 - INFO - Processed leaf node: Practice assessment
+2026-02-04 22:51:49,951 - WARNING - Failed to fetch question do_114143350231040000157: 404
+2026-02-04 22:51:50,527 - INFO - Extracted leaf assessment: 12 questions
+2026-02-04 22:51:50,527 - INFO - Processed leaf node: Final Assessment
+2026-02-04 22:51:50,611 - INFO - Processed leaf node: Framing the Problem Statement
+2026-02-04 22:51:50,695 - INFO - Processed leaf node: The Adoption Plan
+2026-02-04 22:51:50,792 - INFO - Processed leaf node: What is HCD
+2026-02-04 22:51:50,874 - INFO - Processed leaf node: The Common Pitfalls  The Obvious Trap
+2026-02-04 22:51:50,959 - INFO - Processed leaf node: The Discovery Phase
+2026-02-04 22:51:51,046 - INFO - Processed leaf node: Human-Centered Design (HCD) and Empathy
+2026-02-04 22:51:51,155 - INFO - Processed leaf node: Defining a Problem Statement Worksheet
+2026-02-04 22:51:51,240 - INFO - Processed leaf node: Common Design Pitfalls
+2026-02-04 22:51:51,375 - INFO - Processed leaf node: Common Strategic Pitfalls
+2026-02-04 22:51:51,489 - INFO - Processed leaf node: Applications of Data Science
+2026-02-04 22:51:51,737 - WARNING - Failed to fetch question do_114143341889093632139: 404
+2026-02-04 22:51:51,954 - INFO - Extracted leaf assessment: 5 questions
+2026-02-04 22:51:51,954 - INFO - Processed leaf node: Practice assessment
+2026-02-04 22:51:52,041 - INFO - Processed leaf node: The Common Pitfalls  The Loop Trap
+2026-02-04 22:51:52,041 - INFO - ✓ Successfully processed course: do_114141193899892736139
+
+2026-02-04 22:51:52,042 - INFO - Processing course: do_113955620332421120130
+2026-02-04 22:51:52,094 - INFO - Created folder: /home/saipraneethmeduri/Desktop/Projects/Projects/Assessment_quality_score/data/data_with_assessment/do_113955620332421120130
+2026-02-04 22:51:52,095 - INFO - Saved metadata.json
+2026-02-04 22:51:52,136 - INFO - Processed video: Dynamics of Team Development
+2026-02-04 22:51:52,177 - INFO - Processed video: Benefits of Working in Teams
+2026-02-04 22:51:52,220 - INFO - Processed video: Team Performance and Happiness
+2026-02-04 22:51:52,258 - INFO - Processed video: Personality Traits Within a Team
+2026-02-04 22:51:52,299 - INFO - Processed video: Five Dysfunctions of Teams
+2026-02-04 22:51:52,339 - INFO - Processed video: Managing Conflicts
+2026-02-04 22:51:52,382 - INFO - Processed video: Core Capabilities of Teamwork
+2026-02-04 22:51:52,426 - INFO - Processed video: Nurturing Subordinate Development
+2026-02-04 22:51:52,426 - INFO - Saved English subtitles
+2026-02-04 22:51:52,588 - WARNING - Failed to fetch question do_1139563280531456001252: 404
+2026-02-04 22:51:52,803 - INFO - Extracted assessment 1: 5 questions
+2026-02-04 22:51:52,994 - WARNING - Failed to fetch question do_1139556421637816321154: 404
+2026-02-04 22:51:53,203 - INFO - Extracted assessment 2: 5 questions
+2026-02-04 22:51:53,357 - WARNING - Failed to fetch question do_1139556492265553921160: 404
+2026-02-04 22:51:53,562 - INFO - Extracted assessment 3: 5 questions
+2026-02-04 22:51:53,703 - WARNING - Failed to fetch question do_1139556533850603521164: 404
+2026-02-04 22:51:53,980 - INFO - Extracted assessment 4: 5 questions
+2026-02-04 22:51:54,193 - WARNING - Failed to fetch question do_1139556567439851521169: 404
+2026-02-04 22:51:54,579 - INFO - Extracted assessment 5: 6 questions
+2026-02-04 22:51:54,723 - WARNING - Failed to fetch question do_1139556641018839041175: 404
+2026-02-04 22:51:54,909 - INFO - Extracted assessment 6: 4 questions
+2026-02-04 22:51:55,077 - WARNING - Failed to fetch question do_1139556675669360641179: 404
+2026-02-04 22:51:55,230 - INFO - Extracted assessment 7: 4 questions
+2026-02-04 22:51:55,392 - WARNING - Failed to fetch question do_1139556699404042241181: 404
+2026-02-04 22:51:55,591 - INFO - Extracted assessment 8: 5 questions
+2026-02-04 22:51:55,912 - WARNING - Failed to fetch question do_1139557727456296961202: 404
+2026-02-04 22:51:57,171 - INFO - Extracted assessment 9: 22 questions
+2026-02-04 22:51:57,368 - WARNING - Failed to fetch question do_1139556699404042241181: 404
+2026-02-04 22:51:57,625 - INFO - Extracted leaf assessment: 5 questions
+2026-02-04 22:51:57,625 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:51:57,719 - INFO - Processed leaf node: Five Dysfunctions of Teams
+2026-02-04 22:51:57,809 - INFO - Processed leaf node: Nurturing Subordinate Development
+2026-02-04 22:51:58,009 - WARNING - Failed to fetch question do_1139557727456296961202: 404
+2026-02-04 22:51:59,302 - INFO - Extracted leaf assessment: 22 questions
+2026-02-04 22:51:59,302 - INFO - Processed leaf node: Final Assessment
+2026-02-04 22:51:59,699 - WARNING - Failed to fetch question do_1139556533850603521164: 404
+2026-02-04 22:52:00,125 - INFO - Extracted leaf assessment: 5 questions
+2026-02-04 22:52:00,125 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:00,336 - WARNING - Failed to fetch question do_1139556492265553921160: 404
+2026-02-04 22:52:00,547 - INFO - Extracted leaf assessment: 5 questions
+2026-02-04 22:52:00,547 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:00,739 - WARNING - Failed to fetch question do_1139556641018839041175: 404
+2026-02-04 22:52:00,891 - INFO - Extracted leaf assessment: 4 questions
+2026-02-04 22:52:00,891 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:01,106 - WARNING - Failed to fetch question do_1139563280531456001252: 404
+2026-02-04 22:52:01,460 - INFO - Extracted leaf assessment: 5 questions
+2026-02-04 22:52:01,460 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:01,842 - WARNING - Failed to fetch question do_1139556421637816321154: 404
+2026-02-04 22:52:02,045 - INFO - Extracted leaf assessment: 5 questions
+2026-02-04 22:52:02,046 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:02,238 - WARNING - Failed to fetch question do_1139556567439851521169: 404
+2026-02-04 22:52:02,592 - INFO - Extracted leaf assessment: 6 questions
+2026-02-04 22:52:02,592 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:02,726 - INFO - Processed leaf node: Benefits of Working in Teams
+2026-02-04 22:52:02,825 - INFO - Processed leaf node: Dynamics of Team Development
+2026-02-04 22:52:02,912 - INFO - Processed leaf node: Managing Conflicts
+2026-02-04 22:52:02,997 - INFO - Processed leaf node: Team Performance and Happiness
+2026-02-04 22:52:03,080 - INFO - Processed leaf node: Personality Traits Within a Team
+2026-02-04 22:52:03,163 - INFO - Processed leaf node: Core Capabilities of Teamwork
+2026-02-04 22:52:03,361 - WARNING - Failed to fetch question do_1139556675669360641179: 404
+2026-02-04 22:52:03,517 - INFO - Extracted leaf assessment: 4 questions
+2026-02-04 22:52:03,517 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:03,517 - INFO - ✓ Successfully processed course: do_113955620332421120130
+
+2026-02-04 22:52:03,517 - INFO - Processing course: do_1140561554800394241156
+2026-02-04 22:52:03,846 - INFO - Created folder: /home/saipraneethmeduri/Desktop/Projects/Projects/Assessment_quality_score/data/data_with_assessment/do_1140561554800394241156
+2026-02-04 22:52:03,847 - INFO - Saved metadata.json
+2026-02-04 22:52:03,887 - INFO - Processed video: Branding India
+2026-02-04 22:52:03,930 - INFO - Processed video: Brand Building - Part I
+2026-02-04 22:52:03,971 - INFO - Processed video: Brand Building - Part II
+2026-02-04 22:52:04,010 - INFO - Processed video: Benefits of Nation Branding
+2026-02-04 22:52:04,049 - INFO - Processed video: Elements of Nation Brands
+2026-02-04 22:52:04,088 - INFO - Processed video: Establishing Trust in Nation Brands
+2026-02-04 22:52:04,129 - INFO - Processed video: Evolution of India as a Brand - Part I
+2026-02-04 22:52:04,168 - INFO - Processed video: Evolution of India as a Brand - Part II
+2026-02-04 22:52:04,207 - INFO - Processed video: Perception of Countries - Part I
+2026-02-04 22:52:04,247 - INFO - Processed video: Perception of Countries - Part II
+2026-02-04 22:52:04,287 - INFO - Processed video: Perception of Countries - Part III
+2026-02-04 22:52:04,328 - INFO - Processed video: Value Migration - Part I
+2026-02-04 22:52:04,370 - INFO - Processed video: Value Migration - Part II
+2026-02-04 22:52:04,414 - INFO - Processed video: Value Creation through Innovation - Part I
+2026-02-04 22:52:04,454 - INFO - Processed video: Value Creation through Innovation - Part II
+2026-02-04 22:52:04,494 - INFO - Processed video: The Digital Revolution in India
+2026-02-04 22:52:04,494 - INFO - Saved English subtitles
+2026-02-04 22:52:04,811 - WARNING - Failed to fetch question do_11405624668281241611817: 404
+2026-02-04 22:52:04,863 - INFO - Extracted assessment 1: 2 questions
+2026-02-04 22:52:05,018 - WARNING - Failed to fetch question do_11405695081207398411688: 404
+2026-02-04 22:52:05,067 - INFO - Extracted assessment 2: 2 questions
+2026-02-04 22:52:05,241 - WARNING - Failed to fetch question do_11405695715146956811739: 404
+2026-02-04 22:52:05,292 - INFO - Extracted assessment 3: 2 questions
+2026-02-04 22:52:05,512 - WARNING - Failed to fetch question do_11405696312126668811747: 404
+2026-02-04 22:52:05,563 - INFO - Extracted assessment 4: 2 questions
+2026-02-04 22:52:05,720 - WARNING - Failed to fetch question do_11405696622342144011924: 404
+2026-02-04 22:52:05,774 - INFO - Extracted assessment 5: 2 questions
+2026-02-04 22:52:05,934 - WARNING - Failed to fetch question do_11405697157165875211751: 404
+2026-02-04 22:52:05,990 - INFO - Extracted assessment 6: 2 questions
+2026-02-04 22:52:06,141 - WARNING - Failed to fetch question do_11405697515274240011706: 404
+2026-02-04 22:52:06,190 - INFO - Extracted assessment 7: 2 questions
+2026-02-04 22:52:06,338 - WARNING - Failed to fetch question do_11405697880604672011755: 404
+2026-02-04 22:52:06,387 - INFO - Extracted assessment 8: 2 questions
+2026-02-04 22:52:06,531 - WARNING - Failed to fetch question do_11405698324846182411934: 404
+2026-02-04 22:52:06,586 - INFO - Extracted assessment 9: 2 questions
+2026-02-04 22:52:07,018 - WARNING - Failed to fetch question do_11405698734617395211941: 404
+2026-02-04 22:52:07,226 - INFO - Extracted assessment 10: 2 questions
+2026-02-04 22:52:07,529 - WARNING - Failed to fetch question do_11405699357061120011945: 404
+2026-02-04 22:52:07,579 - INFO - Extracted assessment 11: 2 questions
+2026-02-04 22:52:07,726 - WARNING - Failed to fetch question do_11405699903286476811723: 404
+2026-02-04 22:52:07,784 - INFO - Extracted assessment 12: 2 questions
+2026-02-04 22:52:07,932 - WARNING - Failed to fetch question do_11405700209029120011948: 404
+2026-02-04 22:52:07,981 - INFO - Extracted assessment 13: 2 questions
+2026-02-04 22:52:08,155 - WARNING - Failed to fetch question do_11405700570490470411727: 404
+2026-02-04 22:52:08,207 - INFO - Extracted assessment 14: 2 questions
+2026-02-04 22:52:08,389 - WARNING - Failed to fetch question do_11405701131920179211740: 404
+2026-02-04 22:52:08,441 - INFO - Extracted assessment 15: 2 questions
+2026-02-04 22:52:08,597 - WARNING - Failed to fetch question do_11405701423273574411745: 404
+2026-02-04 22:52:08,651 - INFO - Extracted assessment 16: 2 questions
+2026-02-04 22:52:08,811 - WARNING - Failed to fetch question do_11405705478448742411763: 404
+2026-02-04 22:52:09,578 - INFO - Extracted assessment 17: 16 questions
+2026-02-04 22:52:09,659 - INFO - Processed leaf node: Elements of Nation Brands
+2026-02-04 22:52:09,856 - WARNING - Failed to fetch question do_11405696312126668811747: 404
+2026-02-04 22:52:09,912 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:09,912 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:10,002 - INFO - Processed leaf node: Value Creation through Innovation - Part I
+2026-02-04 22:52:10,095 - INFO - Processed leaf node: Establishing Trust in Nation Brands
+2026-02-04 22:52:10,188 - INFO - Processed leaf node: Value Migration - Part II
+2026-02-04 22:52:10,911 - WARNING - Failed to fetch question do_11405697880604672011755: 404
+2026-02-04 22:52:10,965 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:10,965 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:11,162 - WARNING - Failed to fetch question do_11405624668281241611817: 404
+2026-02-04 22:52:11,218 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:11,218 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:11,305 - INFO - Processed leaf node: Brand Building - Part II
+2026-02-04 22:52:11,491 - WARNING - Failed to fetch question do_11405700570490470411727: 404
+2026-02-04 22:52:11,542 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:11,542 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:11,730 - WARNING - Failed to fetch question do_11405700209029120011948: 404
+2026-02-04 22:52:11,785 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:11,785 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:11,973 - WARNING - Failed to fetch question do_11405698734617395211941: 404
+2026-02-04 22:52:12,034 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:12,034 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:12,138 - INFO - Processed leaf node: Perception of Countries - Part III
+2026-02-04 22:52:12,229 - INFO - Processed leaf node: Evolution of India as a Brand - Part II
+2026-02-04 22:52:12,380 - INFO - Processed leaf node: Brand Building - Part I
+2026-02-04 22:52:12,568 - WARNING - Failed to fetch question do_11405697157165875211751: 404
+2026-02-04 22:52:12,617 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:12,617 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:12,811 - WARNING - Failed to fetch question do_11405699357061120011945: 404
+2026-02-04 22:52:12,868 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:12,869 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:12,955 - INFO - Processed leaf node: Branding India
+2026-02-04 22:52:13,141 - WARNING - Failed to fetch question do_11405699903286476811723: 404
+2026-02-04 22:52:13,194 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:13,194 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:13,382 - WARNING - Failed to fetch question do_11405697515274240011706: 404
+2026-02-04 22:52:13,434 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:13,434 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:13,622 - WARNING - Failed to fetch question do_11405705478448742411763: 404
+2026-02-04 22:52:14,430 - INFO - Extracted leaf assessment: 16 questions
+2026-02-04 22:52:14,430 - INFO - Processed leaf node: Final Assessment
+2026-02-04 22:52:14,636 - WARNING - Failed to fetch question do_11405701131920179211740: 404
+2026-02-04 22:52:14,691 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:14,691 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:14,795 - INFO - Processed leaf node: Perception of Countries - Part II
+2026-02-04 22:52:14,887 - INFO - Processed leaf node: Evolution of India as a Brand - Part I
+2026-02-04 22:52:15,076 - WARNING - Failed to fetch question do_11405698324846182411934: 404
+2026-02-04 22:52:15,130 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:15,130 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:15,329 - WARNING - Failed to fetch question do_11405695715146956811739: 404
+2026-02-04 22:52:15,387 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:15,388 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:15,581 - WARNING - Failed to fetch question do_11405696622342144011924: 404
+2026-02-04 22:52:15,674 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:15,674 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:15,765 - INFO - Processed leaf node: Value Migration - Part I
+2026-02-04 22:52:15,855 - INFO - Processed leaf node: Benefits of Nation Branding
+2026-02-04 22:52:15,942 - INFO - Processed leaf node: The Digital Revolution in India
+2026-02-04 22:52:16,401 - WARNING - Failed to fetch question do_11405695081207398411688: 404
+2026-02-04 22:52:16,457 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:16,457 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:16,548 - INFO - Processed leaf node: Perception of Countries - Part I
+2026-02-04 22:52:17,296 - WARNING - Failed to fetch question do_11405701423273574411745: 404
+2026-02-04 22:52:17,349 - INFO - Extracted leaf assessment: 2 questions
+2026-02-04 22:52:17,349 - INFO - Processed leaf node: Practice Quiz
+2026-02-04 22:52:17,445 - INFO - Processed leaf node: Value Creation through Innovation - Part II
+2026-02-04 22:52:17,446 - INFO - ✓ Successfully processed course: do_1140561554800394241156
+
+2026-02-04 22:52:17,446 - INFO - 
+================================================================================
+2026-02-04 22:52:17,446 - INFO - EXTRACTION SUMMARY
+2026-02-04 22:52:17,446 - INFO - ================================================================================
+2026-02-04 22:52:17,447 - INFO - Total courses: 6
+2026-02-04 22:52:17,447 - INFO - Successful: 6
+2026-02-04 22:52:17,447 - INFO - Failed: 0
+2026-02-04 22:52:17,447 - INFO - Output directory: /home/saipraneethmeduri/Desktop/Projects/Projects/Assessment_quality_score/data/data_with_assessment
+2026-02-04 22:52:17,447 - INFO - ================================================================================
