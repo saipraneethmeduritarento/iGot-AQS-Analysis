@@ -310,9 +310,9 @@ python3 scripts/assessment_quailty_score/run.py --gemini
 
 ### Module Organization
 
-✅ **Final Assessments** - Separated into dedicated folders  
-✅ **Practice Quizzes** - Organized by quiz number  
-✅ **Module Content** - Structured by course hierarchy  
+✅ **Final Assessments** - Separated into dedicated folders
+✅ **Practice Quizzes** - Organized by quiz number
+✅ **Module Content** - Structured by course hierarchy
 ✅ **Sessions & Modules** - Categorized appropriately
 
 ## Output Structure
@@ -495,4 +495,7 @@ All scripts provide detailed logging:
 - Error messages and warnings
 - Summary statistics
 
-Jira Ticket: [Q11 | AI Driven Assessment Quality Check for existing courses](https://karmayogibharat.atlassian.net/browse/KB-12640?atlOrigin=eyJpIjoiOWQ4ZTZiYzUyODc2NDAzNThlZTAzNjJlMjBjNTllMjIiLCJwIjoiaiJ9)
+---
+
+Jira Ticket:
+[Q11 | AI Driven Assessment Quality Check for existing courses](https://karmayogibharat.atlassian.net/browse/KB-12640?atlOrigin=eyJpIjoiOWQ4ZTZiYzUyODc2NDAzNThlZTAzNjJlMjBjNTllMjIiLCJwIjoiaiJ9)
