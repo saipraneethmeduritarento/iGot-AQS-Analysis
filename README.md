@@ -19,7 +19,7 @@ Assessment_quality_score/
 │       └── assessment_quality_score/  # AQS evaluation results
 │           ├── gemini-2.0-flash/  # Model-specific results
 │           ├── gemini-2.5-flash/
-│           └── gemini-exp-1206/
+│           └── gemini-3-flash-preview/
 ├── scripts/
 │   ├── assessment_quality_score/      # AQS evaluation engine
 │   │   ├── aqs_evaluator.py          # Core evaluator
@@ -398,12 +398,12 @@ Create a `.env` file in the project root:
 ```bash
 # Required
 GOOGLE_PROJECT_ID=your-gcp-project-id
-GOOGLE_CLOUD_LOCATION=us-central1
+GOOGLE_CLOUD_LOCATION=us-central1 # global for gemini 3 flash preview
 
 # Optional
 GEMINI_MODEL_NAME=gemini-2.0-flash
 # For multiple models:
-# GEMINI_MODEL_NAME=["gemini-2.0-flash", "gemini-2.5-flash", "gemini-exp-1206"]
+# GEMINI_MODEL_NAME=["gemini-2.0-flash", "gemini-2.5-flash", "gemini-3-flash-preview"]
 ```
 
 ### Google Cloud Authentication
