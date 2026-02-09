@@ -494,8 +494,3 @@ All scripts provide detailed logging:
 - Assessment extraction results
 - Error messages and warnings
 - Summary statistics
-
----
-
-Jira Ticket:
-[Q11 | AI Driven Assessment Quality Check for existing courses](https://karmayogibharat.atlassian.net/browse/KB-12640?atlOrigin=eyJpIjoiOWQ4ZTZiYzUyODc2NDAzNThlZTAzNjJlMjBjNTllMjIiLCJwIjoiaiJ9)
