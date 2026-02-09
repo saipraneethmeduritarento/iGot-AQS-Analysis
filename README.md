@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project automates the extraction and analysis of course content and assessments from the Karmayogi Bharat learning platform. It provides tools to extract course materials, organize them by modules, and prepare assessment data for quality analysis.
+This project provides an end‑to‑end AI‑powered pipeline that automates the extraction and organization of course content from the Karmayogi Bharat (iGOT) platform and evaluates assessment quality using an AI‑driven Assessment Quality Score (AQS) framework. It processes course materials (transcripts, PDFs, metadata) and assessment data to classify question difficulty, map cognitive levels using Bloom’s taxonomy, assess content alignment, and generate transparent explanations. The system outputs a composite AQS score to ensure consistent, objective, and scalable assessment quality across all iGOT courses.
 
 ## Project Structure
 
