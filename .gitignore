@@ -18,3 +18,8 @@ outputs/
 
 # explainations/
 confluence/
+ 
+# prompt_templates
+prompts/aqs_system_prompts_v1.yaml
+
+libs/

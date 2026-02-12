@@ -16,6 +16,7 @@ graph TD
         Input2[Assessment Metadata<br>assessment.json]
         Input3[Questions<br>assessment_questions.txt]
         Input4[Resources<br>Instruction.pdf]
+	Input5[aqs_system_prompts.yaml]
     end
 
     subgraph Core Logic
@@ -28,10 +29,12 @@ graph TD
         Result[AQS Analysis<br>JSON Output]
     end
 
-    Input1 -->|competencies, description| Loader
+    Input1 -->|description| Loader
     Input2 -->|totalQuestions, type| Loader
     Input3 -->|question text, options| Loader
     Input4 -->|content summary| Loader
+    Input5 -->|prompt| Loader
+
 
     Loader -->|Formatted Context| Evaluator
     Evaluator -->|Prompt Construction| AI

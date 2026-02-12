@@ -1,0 +1,20 @@
+MODEL SUMMARY
+Model Name,Input Price ($/1M),Output Price ($/1M),Courses,Assessments,Input Tokens,Output Tokens,Thinking Tokens,Total Tokens,Cost (USD),Cost (INR)
+gemini-2.0-flash,0.1,0.4,3,5,18670,9383,0,28053,0.005620,0.51
+gemini-2.5-flash,0.3,2.5,3,5,18670,11087,0,29757,0.033318,3.02
+gemini-3-flash-preview,0.5,3.0,3,5,18670,5395,0,24065,0.025520,2.31
+
+GRAND TOTAL
+,,,,,56010,25865,0,81875,0.064458,5.84
+
+DETAILED COURSE DATA
+Course ID,Course Name,Model,Assessments,Input Tokens,Output Tokens,Thinking Tokens,Total Tokens,Cost (USD),Cost (INR)
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-2.0-flash,1,7698,5575,0,13273,0.003000,0.27
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-2.0-flash,3,7686,2764,0,10450,0.001874,0.17
+do_1142748906596843521455,AI Policies and Governance in India,gemini-2.0-flash,1,3286,1044,0,4330,0.000746,0.07
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-2.5-flash,1,7698,5598,0,13296,0.016304,1.48
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-2.5-flash,3,7686,3805,0,11491,0.011818,1.07
+do_1142748906596843521455,AI Policies and Governance in India,gemini-2.5-flash,1,3286,1684,0,4970,0.005196,0.47
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-3-flash-preview,1,7698,1205,0,8903,0.007464,0.68
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-3-flash-preview,3,7686,3040,0,10726,0.012963,1.17
+do_1142748906596843521455,AI Policies and Governance in India,gemini-3-flash-preview,1,3286,1150,0,4436,0.005093,0.46

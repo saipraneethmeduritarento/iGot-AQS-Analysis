@@ -886,7 +886,7 @@ def generate_html_report(data_structure, output_file):
         }}
         
         function renderAssessment(assessment, index) {{
-            const qualityBadge = getQualityBadge(assessment.quality_tier);
+            const qualityBadge = getQualityBadge(assessment.AQS_quality_tier);
             const bloomsScores = assessment.blooms_scores || {{}};
             
             let html = `

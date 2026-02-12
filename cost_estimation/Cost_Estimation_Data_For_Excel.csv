@@ -1,0 +1,77 @@
+AQS COST ESTIMATION SUMMARY
+
+Generated from codebase analysis
+Date:,2026-02-11
+
+MODEL PRICING (from aqs_evaluator.py)
+Model Name,Input Price ($/1M tokens),Output Price ($/1M tokens),Input Price (₹/1M tokens),Output Price (₹/1M tokens)
+gemini-2.0-flash,0.1,0.4,9.059000000000001,36.236000000000004
+gemini-2.5-flash,0.3,2.5,27.177,226.47500000000002
+gemini-3-flash-preview,0.5,3.0,45.295,271.77
+gemini-3-pro-preview,2.0,12.0,181.18,1087.08
+
+CONVERSION RATE
+USD to INR,90.59
+
+USAGE SUMMARY BY MODEL
+Model Name,Input Price ($/1M),Output Price ($/1M),Courses Evaluated,Total Assessments,Input Tokens,Output Tokens,Thinking Tokens,Total Tokens,Input Cost (USD),Output Cost (USD),Total Cost (USD),Total Cost (INR)
+gemini-2.0-flash,0.1,0.4,16,58,59714,30145,0,89859,0.005971,0.012058,0.018029,1.63
+gemini-2.5-flash,0.3,2.5,16,58,59714,36424,0,96138,0.017914,0.091060,0.108974,9.87
+gemini-3-flash-preview,0.5,3.0,12,31,59714,24022,0,83736,0.029857,0.072066,0.101923,9.23
+
+GRAND TOTAL,,,,,179142,90591,0,269733,,,0.730855,66.21
+
+
+CALCULATION FORMULAS
+Formula Name,Formula
+Input Cost (USD),"= (Input Tokens / 1,000,000) × Input Price ($/1M)"
+Output Cost (USD),"= (Output Tokens / 1,000,000) × Output Price ($/1M)"
+Total Cost (USD),= Input Cost (USD) + Output Cost (USD)
+Total Cost (INR),= Total Cost (USD) × USD_TO_INR_RATE
+
+DETAILED COURSE DATA
+Course ID,Course Name,Model,Assessments,Input Tokens,Output Tokens,Thinking Tokens,Total Tokens,Input Cost (USD),Output Cost (USD),Total Cost (USD),Total Cost (INR)
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-2.0-flash,1,7698,5680,0,13378,0.000770,0.002272,0.003042,0.28
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-2.0-flash,1,7698,5745,0,13443,0.000770,0.002298,0.003068,0.28
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-2.0-flash,2,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-2.0-flash,1,7698,5575,0,13273,0.000770,0.002230,0.003000,0.27
+do_113794225678417920142,Assessmnet for Level D 114th ,gemini-2.0-flash,2,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_113955620332421120130,Managing and Leading Teams,gemini-2.0-flash,10,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_1140561554800394241156,Nation Branding,gemini-2.0-flash,18,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-2.0-flash,4,9538,3561,0,13099,0.000954,0.001424,0.002378,0.22
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-2.0-flash,4,9538,3644,0,13182,0.000954,0.001458,0.002411,0.22
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-2.0-flash,5,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-2.0-flash,3,7686,2764,0,10450,0.000769,0.001106,0.001874,0.17
+do_1142748906596843521455,AI Policies and Governance in India,gemini-2.0-flash,1,3286,1071,0,4357,0.000329,0.000428,0.000757,0.07
+do_1142748906596843521455,AI Policies and Governance in India,gemini-2.0-flash,1,3286,1061,0,4347,0.000329,0.000424,0.000753,0.07
+do_1142748906596843521455,AI Policies and Governance in India,gemini-2.0-flash,2,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_1142748906596843521455,AI Policies and Governance in India,gemini-2.0-flash,1,3286,1044,0,4330,0.000329,0.000418,0.000746,0.07
+do_1143470901356625921827,Introduction to Emerging Technologies,gemini-2.0-flash,2,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-2.5-flash,1,7698,5865,0,13563,0.002309,0.014663,0.016972,1.54
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-2.5-flash,1,7698,5905,0,13603,0.002309,0.014762,0.017072,1.55
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-2.5-flash,2,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-2.5-flash,1,7698,5598,0,13296,0.002309,0.013995,0.016304,1.48
+do_113794225678417920142,Assessmnet for Level D 114th ,gemini-2.5-flash,2,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_113955620332421120130,Managing and Leading Teams,gemini-2.5-flash,10,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_1140561554800394241156,Nation Branding,gemini-2.5-flash,18,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-2.5-flash,4,9538,5220,0,14758,0.002861,0.013050,0.015911,1.44
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-2.5-flash,4,9538,5267,0,14805,0.002861,0.013168,0.016029,1.45
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-2.5-flash,5,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-2.5-flash,3,7686,3805,0,11491,0.002306,0.009513,0.011818,1.07
+do_1142748906596843521455,AI Policies and Governance in India,gemini-2.5-flash,1,3286,1514,0,4800,0.000986,0.003785,0.004771,0.43
+do_1142748906596843521455,AI Policies and Governance in India,gemini-2.5-flash,1,3286,1566,0,4852,0.000986,0.003915,0.004901,0.44
+do_1142748906596843521455,AI Policies and Governance in India,gemini-2.5-flash,2,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_1142748906596843521455,AI Policies and Governance in India,gemini-2.5-flash,1,3286,1684,0,4970,0.000986,0.004210,0.005196,0.47
+do_1143470901356625921827,Introduction to Emerging Technologies,gemini-2.5-flash,2,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-3-flash-preview,1,7698,4055,0,11753,0.003849,0.012165,0.016014,1.45
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-3-flash-preview,1,7698,4358,0,12056,0.003849,0.013074,0.016923,1.53
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-3-flash-preview,2,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_113778723173818368139,Assessment for Level IV - 34th ,gemini-3-flash-preview,1,7698,1205,0,8903,0.003849,0.003615,0.007464,0.68
+do_113794225678417920142,Assessmnet for Level D 114th ,gemini-3-flash-preview,2,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_113955620332421120130,Managing and Leading Teams,gemini-3-flash-preview,10,0,0,0,0,0.000000,0.000000,0.000000,0.00
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-3-flash-preview,4,9538,3976,0,13514,0.004769,0.011928,0.016697,1.51
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-3-flash-preview,4,9538,3846,0,13384,0.004769,0.011538,0.016307,1.48
+do_114141193899892736139,Structured Approach to Problem Solving,gemini-3-flash-preview,3,7686,3040,0,10726,0.003843,0.009120,0.012963,1.17
+do_1142748906596843521455,AI Policies and Governance in India,gemini-3-flash-preview,1,3286,1210,0,4496,0.001643,0.003630,0.005273,0.48
+do_1142748906596843521455,AI Policies and Governance in India,gemini-3-flash-preview,1,3286,1182,0,4468,0.001643,0.003546,0.005189,0.47
+do_1142748906596843521455,AI Policies and Governance in India,gemini-3-flash-preview,1,3286,1150,0,4436,0.001643,0.003450,0.005093,0.46

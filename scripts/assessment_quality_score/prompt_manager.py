@@ -16,13 +16,15 @@ import yaml
 class PromptManager:
     """Manages loading and formatting of system prompts from YAML configuration."""
 
-    def __init__(self, prompts_dir: Optional[str] = None):
+    def __init__(self, prompts_dir: Optional[str] = None, version: str = "v3"):
         """
         Initialize the prompt manager.
 
         Args:
             prompts_dir: Path to the prompts directory. Defaults to project prompts folder.
+            version: Version of prompts to use (v1, v2, etc.). Defaults to v2.
         """
+        self.version = version
         if prompts_dir is None:
             # Default to prompts directory relative to this file
             self.prompts_dir = Path(__file__).parent.parent.parent / "prompts"
@@ -40,7 +42,11 @@ class PromptManager:
             raise FileNotFoundError(f"Prompt file not found: {prompt_file}")
 
         with open(prompt_file, "r", encoding="utf-8") as f:
-            self.prompts = yaml.safe_load(f)
+            all_prompts = yaml.safe_load(f)
+            # Load the specific version (v1, v2, etc.)
+            self.prompts = all_prompts.get(self.version, {})
+            if not self.prompts:
+                raise ValueError(f"Prompt version '{self.version}' not found in {prompt_file}")
 
     def _safe_format(self, template: str, **kwargs) -> str:
         """
@@ -273,7 +279,7 @@ class PromptManager:
             return template.format(**kwargs)
         return template
 
-    def get_quality_tier(self, score: float) -> tuple[str, str]:
+    def get_aqs_quality_tier(self, score: float) -> tuple[str, str]:
         """
         Determine quality tier based on AQS score.
 

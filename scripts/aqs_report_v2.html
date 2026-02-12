@@ -35,7 +35,13 @@
             background: var(--bg-dark);
             color: var(--text-primary);
             min-height: 100vh;
+            padding: 2rem;
             line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
         }
         
         .header {
@@ -202,34 +208,17 @@
         .assessment-card {
             background: #ffffff;
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
             box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
         }
         
         .assessment-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
+            background: var(--bg-card-hover);
             border-color: var(--primary-color);
-        }
-        
-        .assessment-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--border-color);
-            transition: background 0.3s ease;
-        }
-
-        .assessment-card:hover::before {
-            background: var(--primary-color);
+            transform: translateX(5px);
         }
         
         .assessment-header {
@@ -268,106 +257,30 @@
             border: 1px solid #bfdbfe;
         }
         
-        .badge-satisfactory {
+        .badge-fair {
             background: #fef3c7;
             color: #92400e;
             border: 1px solid #fde68a;
         }
         
-        .badge-needs-improvement {
-            background: #ffedd5;
-            color: #9a3412;
-            border: 1px solid #fed7aa;
-        }
-
         .badge-poor {
             background: #fee2e2;
             color: #b91c1c;
             border: 1px solid #fca5a5;
         }
-
-        .quality-legend {
-            background: #ffffff;
-            padding: 1.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
+        
+        .badge-info {
+            background: #e0f2fe;
+            color: #075985;
+            border: 1px solid #bae6fd;
         }
-
-        .legend-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        
+        .badge-warning {
+            background: #fff7ed;
+            color: #9a3412;
+            border: 1px solid #ffedd5;
         }
-
-        .legend-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        .legend-item {
-            display: grid;
-            grid-template-columns: 180px 1fr;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.75rem;
-            border-radius: 8px;
-            transition: background 0.2s ease;
-        }
-
-        .legend-item:hover {
-            background: var(--bg-card-hover);
-        }
-
-        .legend-desc {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.4;
-        }
-
-        .legend-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .meta-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-        }
-
-        .meta-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .meta-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        .meta-value {
-            font-size: 1rem;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-
+        
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -393,18 +306,6 @@
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--text-primary);
-        }
-        
-        .badge-info {
-            background: #e0f2fe;
-            color: #075985;
-            border: 1px solid #bae6fd;
-        }
-        
-        .badge-warning {
-            background: #fff7ed;
-            color: #9a3412;
-            border: 1px solid #ffedd5;
         }
         
         .blooms-chart {
@@ -568,6 +469,7 @@
             overflow-y: auto;
             padding-right: 0.5rem;
             border-radius: 8px;
+            /* Custom scrollbar for this container */
             scrollbar-width: thin;
             scrollbar-color: #cbd5e1 #f1f5f9;
         }
@@ -666,7 +568,7 @@
                 grid-template-columns: 1fr;
             }
         }
-        
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -683,119 +585,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
-        
-        body {
-            padding: 0;
-            margin: 0;
-            overflow: auto;
-        }
-        
-        .container {
-            max-width: 100%;
-            margin: 0;
-            padding: 1rem;
-        }
-        
-        /* Two-column layout */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            gap: 1.5rem;
-            align-items: start;
-        }
-        
-        .sidebar {
-            position: sticky;
-            top: 1rem;
-            max-height: calc(100vh - 2rem);
-            overflow-y: auto;
-        }
-        
-        .main-content {
-            min-width: 0;
-        }
-        
-        .header {
-            border-radius: 0;
-            margin-bottom: 1.5rem;
-            grid-column: 1 / -1;
-        }
-        
-        .controls {
-            grid-column: 1 / -1;
-        }
-        
-        
-        .input-data-section {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            color: var(--text-primary);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .input-data-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .input-data-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
-        .input-data-card {
-            background: #ffffff;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.25rem;
-            transition: all 0.3s ease;
-        }
-        
-        .input-data-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow);
-        }
-        
-        .input-data-card-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .input-data-card-desc {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            line-height: 1.5;
-        }
-        
-        .input-data-card-files {
-            margin-top: 0.75rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .input-data-file {
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-            padding: 0.25rem 0.5rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 4px;
-            display: inline-block;
-            margin: 0.25rem 0.25rem 0 0;
-        }
-
     </style>
 </head>
 <body>
@@ -818,16 +607,8 @@
             </div>
         </div>
         
-        <div class="main-layout">
-            <div class="sidebar">
-                <div id="inputDataSection"></div>
-            </div>
-            
-            <div class="main-content">
-                <div id="statsSection" class="stats-grid"></div>
-                <div id="contentSection"></div>
-            </div>
-        </div>
+        <div id="statsSection" class="stats-grid"></div>
+        <div id="contentSection"></div>
     </div>
 
     <script>
@@ -1564,27 +1345,6 @@
             }
           }
         ]
-      },
-      "course_metadata.json": {
-        "identifier": "do_114141193899892736139",
-        "name": "Structured Approach to Problem Solving",
-        "description": "This course is tailored for learners seeking to enhance their analytical and critical thinking abilities. Ideal for students, professionals, and anyone intrigued by systematic approaches, this course empowers you with the foundational skills needed to approach problems with clarity and confidence.",
-        "keywords": [],
-        "organisation": "Fractal",
-        "competencies": [
-          "Behavioural",
-          "Behavioural",
-          "Behavioural"
-        ],
-        "primaryCategory": "Course",
-        "contentType": "Course",
-        "creator": "Swati Balyapelli",
-        "createdOn": "2024-09-13T15:02:38.487+0530",
-        "lastUpdatedOn": "2024-09-21T11:16:54.281+0530",
-        "status": "Live",
-        "avgRating": 4.5,
-        "totalRatings": 5042,
-        "course_url": "https://tarento-my.sharepoint.com/:f:/p/saipraneeth_meduri/IgAsb9QAPUvJR6acn-bZUaFGAfg1DZbmoTR8hESiqHx1sRs?e=25Fffd"
       }
     },
     "do_113778723173818368139": {
@@ -1933,26 +1693,6 @@
             }
           }
         ]
-      },
-      "course_metadata.json": {
-        "identifier": "do_113778723173818368139",
-        "name": "Assessment for Level IV - 34th ",
-        "description": "Assessment ",
-        "keywords": [
-          "Assessment ",
-          "Level IV - 34"
-        ],
-        "organisation": "Institute of Secretariat Training and Management",
-        "competencies": [],
-        "primaryCategory": "Standalone Assessment",
-        "contentType": "Course",
-        "creator": "ISTM ISTM",
-        "createdOn": "2023-04-20T12:14:03.877+0530",
-        "lastUpdatedOn": "2023-09-05T11:51:41.148+0530",
-        "status": "Live",
-        "avgRating": 4.4,
-        "totalRatings": 358,
-        "course_url": "https://tarento-my.sharepoint.com/:f:/p/saipraneeth_meduri/IgAros7tctvUT4SQFemawbKwAXWswd2eHgts_Wk_-4WQ2i4?e=GexH1o"
       }
     },
     "do_1142748906596843521455": {
@@ -2255,27 +1995,6 @@
             }
           }
         ]
-      },
-      "course_metadata.json": {
-        "identifier": "do_1142748906596843521455",
-        "name": "AI Policies and Governance in India",
-        "description": "This Podcast is the first one in the series of our dialogue with Government officials, Academia and Industry experts in AI-related topics. In this Podcast, we have invited Dr Geetha Raju ji, from Centre for Responsible AI, under aegis of IIT Madras, who is conversing with NeGD’s Emerging Tech, Practice Lead, Shri Vishal Srivastava.",
-        "keywords": [
-          "#AIProjects, #AIGovernance, #testdata, #validationdata, #productiondata, #AIValue, #AICost, #EthicalAI, #bias, #participatoryAI, #AIusecases, #AIGovernment"
-        ],
-        "organisation": "National E-Governance Division (NEGD) MeitY Govt of India",
-        "competencies": [
-          "Domain"
-        ],
-        "primaryCategory": "Course",
-        "contentType": "Course",
-        "creator": "Chhaya Sharma",
-        "createdOn": "2025-03-21T06:59:23.732+0000",
-        "lastUpdatedOn": "2025-04-04T13:26:53.791+0000",
-        "status": "Live",
-        "avgRating": 4.3,
-        "totalRatings": 4607,
-        "course_url": "https://tarento-my.sharepoint.com/:f:/p/saipraneeth_meduri/IgCB_fu08u6QRKwmhhVVIZM0AXNv6dMAvFxnZmS63uM10_8?e=8u4kEC"
       }
     }
   },
@@ -3014,27 +2733,6 @@
             }
           }
         ]
-      },
-      "course_metadata.json": {
-        "identifier": "do_114141193899892736139",
-        "name": "Structured Approach to Problem Solving",
-        "description": "This course is tailored for learners seeking to enhance their analytical and critical thinking abilities. Ideal for students, professionals, and anyone intrigued by systematic approaches, this course empowers you with the foundational skills needed to approach problems with clarity and confidence.",
-        "keywords": [],
-        "organisation": "Fractal",
-        "competencies": [
-          "Behavioural",
-          "Behavioural",
-          "Behavioural"
-        ],
-        "primaryCategory": "Course",
-        "contentType": "Course",
-        "creator": "Swati Balyapelli",
-        "createdOn": "2024-09-13T15:02:38.487+0530",
-        "lastUpdatedOn": "2024-09-21T11:16:54.281+0530",
-        "status": "Live",
-        "avgRating": 4.5,
-        "totalRatings": 5042,
-        "course_url": "https://tarento-my.sharepoint.com/:f:/p/saipraneeth_meduri/IgAsb9QAPUvJR6acn-bZUaFGAfg1DZbmoTR8hESiqHx1sRs?e=25Fffd"
       }
     },
     "do_113778723173818368139": {
@@ -4245,26 +3943,6 @@
             }
           }
         ]
-      },
-      "course_metadata.json": {
-        "identifier": "do_113778723173818368139",
-        "name": "Assessment for Level IV - 34th ",
-        "description": "Assessment ",
-        "keywords": [
-          "Assessment ",
-          "Level IV - 34"
-        ],
-        "organisation": "Institute of Secretariat Training and Management",
-        "competencies": [],
-        "primaryCategory": "Standalone Assessment",
-        "contentType": "Course",
-        "creator": "ISTM ISTM",
-        "createdOn": "2023-04-20T12:14:03.877+0530",
-        "lastUpdatedOn": "2023-09-05T11:51:41.148+0530",
-        "status": "Live",
-        "avgRating": 4.4,
-        "totalRatings": 358,
-        "course_url": "https://tarento-my.sharepoint.com/:f:/p/saipraneeth_meduri/IgAros7tctvUT4SQFemawbKwAXWswd2eHgts_Wk_-4WQ2i4?e=GexH1o"
       }
     },
     "do_1142748906596843521455": {
@@ -4567,27 +4245,6 @@
             }
           }
         ]
-      },
-      "course_metadata.json": {
-        "identifier": "do_1142748906596843521455",
-        "name": "AI Policies and Governance in India",
-        "description": "This Podcast is the first one in the series of our dialogue with Government officials, Academia and Industry experts in AI-related topics. In this Podcast, we have invited Dr Geetha Raju ji, from Centre for Responsible AI, under aegis of IIT Madras, who is conversing with NeGD’s Emerging Tech, Practice Lead, Shri Vishal Srivastava.",
-        "keywords": [
-          "#AIProjects, #AIGovernance, #testdata, #validationdata, #productiondata, #AIValue, #AICost, #EthicalAI, #bias, #participatoryAI, #AIusecases, #AIGovernment"
-        ],
-        "organisation": "National E-Governance Division (NEGD) MeitY Govt of India",
-        "competencies": [
-          "Domain"
-        ],
-        "primaryCategory": "Course",
-        "contentType": "Course",
-        "creator": "Chhaya Sharma",
-        "createdOn": "2025-03-21T06:59:23.732+0000",
-        "lastUpdatedOn": "2025-04-04T13:26:53.791+0000",
-        "status": "Live",
-        "avgRating": 4.3,
-        "totalRatings": 4607,
-        "course_url": "https://tarento-my.sharepoint.com/:f:/p/saipraneeth_meduri/IgCB_fu08u6QRKwmhhVVIZM0AXNv6dMAvFxnZmS63uM10_8?e=8u4kEC"
       }
     }
   },
@@ -5326,27 +4983,6 @@
             }
           }
         ]
-      },
-      "course_metadata.json": {
-        "identifier": "do_114141193899892736139",
-        "name": "Structured Approach to Problem Solving",
-        "description": "This course is tailored for learners seeking to enhance their analytical and critical thinking abilities. Ideal for students, professionals, and anyone intrigued by systematic approaches, this course empowers you with the foundational skills needed to approach problems with clarity and confidence.",
-        "keywords": [],
-        "organisation": "Fractal",
-        "competencies": [
-          "Behavioural",
-          "Behavioural",
-          "Behavioural"
-        ],
-        "primaryCategory": "Course",
-        "contentType": "Course",
-        "creator": "Swati Balyapelli",
-        "createdOn": "2024-09-13T15:02:38.487+0530",
-        "lastUpdatedOn": "2024-09-21T11:16:54.281+0530",
-        "status": "Live",
-        "avgRating": 4.5,
-        "totalRatings": 5042,
-        "course_url": "https://tarento-my.sharepoint.com/:f:/p/saipraneeth_meduri/IgAsb9QAPUvJR6acn-bZUaFGAfg1DZbmoTR8hESiqHx1sRs?e=25Fffd"
       }
     },
     "do_113778723173818368139": {
@@ -6555,26 +6191,6 @@
             }
           }
         ]
-      },
-      "course_metadata.json": {
-        "identifier": "do_113778723173818368139",
-        "name": "Assessment for Level IV - 34th ",
-        "description": "Assessment ",
-        "keywords": [
-          "Assessment ",
-          "Level IV - 34"
-        ],
-        "organisation": "Institute of Secretariat Training and Management",
-        "competencies": [],
-        "primaryCategory": "Standalone Assessment",
-        "contentType": "Course",
-        "creator": "ISTM ISTM",
-        "createdOn": "2023-04-20T12:14:03.877+0530",
-        "lastUpdatedOn": "2023-09-05T11:51:41.148+0530",
-        "status": "Live",
-        "avgRating": 4.4,
-        "totalRatings": 358,
-        "course_url": "https://tarento-my.sharepoint.com/:f:/p/saipraneeth_meduri/IgAros7tctvUT4SQFemawbKwAXWswd2eHgts_Wk_-4WQ2i4?e=GexH1o"
       }
     },
     "do_1142748906596843521455": {
@@ -6877,27 +6493,6 @@
             }
           }
         ]
-      },
-      "course_metadata.json": {
-        "identifier": "do_1142748906596843521455",
-        "name": "AI Policies and Governance in India",
-        "description": "This Podcast is the first one in the series of our dialogue with Government officials, Academia and Industry experts in AI-related topics. In this Podcast, we have invited Dr Geetha Raju ji, from Centre for Responsible AI, under aegis of IIT Madras, who is conversing with NeGD’s Emerging Tech, Practice Lead, Shri Vishal Srivastava.",
-        "keywords": [
-          "#AIProjects, #AIGovernance, #testdata, #validationdata, #productiondata, #AIValue, #AICost, #EthicalAI, #bias, #participatoryAI, #AIusecases, #AIGovernment"
-        ],
-        "organisation": "National E-Governance Division (NEGD) MeitY Govt of India",
-        "competencies": [
-          "Domain"
-        ],
-        "primaryCategory": "Course",
-        "contentType": "Course",
-        "creator": "Chhaya Sharma",
-        "createdOn": "2025-03-21T06:59:23.732+0000",
-        "lastUpdatedOn": "2025-04-04T13:26:53.791+0000",
-        "status": "Live",
-        "avgRating": 4.3,
-        "totalRatings": 4607,
-        "course_url": "https://tarento-my.sharepoint.com/:f:/p/saipraneeth_meduri/IgCB_fu08u6QRKwmhhVVIZM0AXNv6dMAvFxnZmS63uM10_8?e=8u4kEC"
       }
     }
   }
@@ -6980,127 +6575,9 @@
         }
         
         function updateDisplay() {
-            updateInputDataSection();
             updateStats();
             updateContent();
         }
-        
-        
-        function updateInputDataSection() {
-            const inputDataSection = document.getElementById('inputDataSection');
-            const filteredData = getFilteredData();
-            
-            if (filteredData.length === 0) {
-                inputDataSection.innerHTML = '';
-                return;
-            }
-            
-            // Get the current item's data
-            const item = filteredData[0];
-            const allAssessments = item.data['all_assessments_aqs.json'];
-            const assessmentCount = allAssessments?.total_assessments || 
-                                   allAssessments?.assessments?.length || 0;
-            const courseName = allAssessments?.course_name || 'Unknown Course';
-            
-            // Build dynamic file paths based on course ID
-            const dataPath = `data/data_point/${item.doId}`;
-            
-            // Get assessment names for display
-            const assessmentNames = [];
-            if (allAssessments?.assessments) {
-                allAssessments.assessments.forEach(assessment => {
-                    if (assessment.assessment_name) {
-                        assessmentNames.push(assessment.assessment_name);
-                    }
-                });
-            }
-            
-            // Calculate total questions across all assessments
-            let totalQuestions = 0;
-            if (allAssessments?.assessments) {
-                allAssessments.assessments.forEach(assessment => {
-                    totalQuestions += assessment.total_questions || 
-                                     assessment.question_classifications?.length || 0;
-                });
-            }
-            
-            inputDataSection.innerHTML = `
-                <div class="input-data-section">
-                    <div class="input-data-title">
-                        📂 Input Data Sources - ${item.doId}
-                    </div>
-                    <div style="margin-bottom: 1rem; opacity: 0.9; line-height: 1.6;">
-                        <div><strong>📚 ${courseName}</strong></div>
-                        <div style="font-size: 0.9rem; margin-top: 0.25rem;">
-                            ✅ ${assessmentCount} assessment${assessmentCount !== 1 ? 's' : ''} analyzed • 
-                            ❓ ${totalQuestions} total question${totalQuestions !== 1 ? 's' : ''} 
-                        </div>
-                    </div>
-                                            <div class="input-data-card">
-                            <div class="input-data-card-title">
-                                ⚙️ Configuration
-                            </div>
-                            <div class="input-data-card-desc">
-                                System prompts and evaluation parameters
-                            </div>
-                            <div class="input-data-card-files">
-                                <div class="input-data-file">📜 aqs_system_prompts.yaml: v3</div>
-                            </div>
-                        </div>
-                    <div class="input-data-grid">
-                        <div class="input-data-card">
-                            <div class="input-data-card-title">
-                                📝 Assessment Files
-                            </div>
-                            <div class="input-data-card-desc">
-                                ${assessmentCount} assessment${assessmentCount !== 1 ? 's' : ''} processed from:
-                            </div>
-                            <div class="input-data-card-files">
-                                ${assessmentNames.map(name => `
-                                    <div style="margin-bottom: 0.5rem;">
-                                        <div style="font-weight: 600; font-size: 0.85rem; margin-bottom: 0.25rem;">📋 ${name}</div>
-                                        <div class="input-data-file">🔍 assessment_questions.txt</div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                        
-                        <div class="input-data-card">
-                            <div class="input-data-card-title">
-                                📚 Course Content
-                            </div>
-                            <div class="input-data-card-desc">
-                                Course materials and metadata for alignment analysis
-                            </div>
-                            <div class="input-data-card-files">
-                                <div class="input-data-file">📂 courses/content/* files</div>
-                                <div class="input-data-file">🗒️ Metadata.json</div>
-                                <div style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.8;">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="input-data-card">
-                            <div class="input-data-card-title">
-                                🎬 Video Transcripts
-                            </div>
-                            <div class="input-data-card-desc">
-                                Subtitle files containing course video content
-                            </div>
-                            <div class="input-data-card-files">
-                                <div class="input-data-file">🌐 *.vtt</div>
-                                <div style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.8;">
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            `;
-        }
-        
-        
-        
         
         function updateStats() {
             const statsSection = document.getElementById('statsSection');
@@ -7205,40 +6682,14 @@
             
             const courseName = allAssessments.course_name || 'Unknown Course';
             
-            // Extract metadata if available (from v3 format)
-            const firstAssessment = allAssessments.assessments && allAssessments.assessments.length > 0 ? allAssessments.assessments[0] : null;
-            const inputMetadata = firstAssessment && firstAssessment.input_metadata ? firstAssessment.input_metadata : null;
-            
-            // Fallbacks for metadata
-            const difficultyLevel = allAssessments.assessments && allAssessments.assessments.length > 0 ? allAssessments.assessments[0].difficulty_level : 'N/A';
-            const totalQuestions = allAssessments.assessments ? allAssessments.assessments.reduce((sum, a) => sum + (a.total_questions || (a.question_classifications ? a.question_classifications.length : 0)), 0) : 'N/A';
-
             let html = `
                 <div class="content-section">
                     <div class="section-title">
                         ${model} - ${doId}
                     </div>
-                    
-                    <div class="meta-grid">
-                        <div class="meta-item">
-                            <span class="meta-label">Course Name</span>
-                            <span class="meta-value">${courseName}</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Course ID</span>
-                            <span class="meta-value">${doId}</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Avg Difficulty</span>
-                            <span class="meta-value">${difficultyLevel}</span>
-                        </div>
-                         <div class="meta-item">
-                            <span class="meta-label">Total Questions</span>
-                            <span class="meta-value">${totalQuestions}</span>
-                        </div>
-                    </div>
-                    
-                    ${renderCourseMetadata(data['course_metadata.json'])}
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                        <strong>Course:</strong> ${courseName}
+                    </p>
             `;
             
             if (allAssessments.assessments) {
@@ -7258,13 +6709,8 @@
         }
         
         function renderAssessment(assessment, index) {
-            // Handle both quality_tier keys
-            const tier = assessment.quality_tier || assessment.AQS_quality_tier;
-            const qualityBadge = getQualityBadge(tier, assessment.aqs_score);
+            const qualityBadge = getQualityBadge(assessment.quality_tier);
             const bloomsScores = assessment.blooms_scores || {};
-            
-            // Extract input metadata specific to this assessment if available
-            const meta = assessment.input_metadata ? assessment.input_metadata.assessment_info : null;
             
             let html = `
                 <div class="assessment-card">
@@ -7272,22 +6718,10 @@
                         <div class="assessment-title">
                             ${assessment.assessment_name || 'Assessment ' + (index + 1)}
                         </div>
-                        <div style="text-align: right;">
-                            <span class="badge ${qualityBadge.class}" style="font-size: 0.9rem; padding: 0.5rem 1rem;">${qualityBadge.text}</span>
-                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem; max-width: 300px; line-height: 1.3;">
-                                ${qualityBadge.description}
-                            </div>
+                        <div>
+                            <span class="badge ${qualityBadge.class}">${qualityBadge.text}</span>
                         </div>
                     </div>
-                    
-                    ${assessment.quality_tier_reasoning ? `
-                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.25rem; margin-bottom: 2rem; border-radius: 12px; position: relative;">
-                        <div style="position: absolute; top: -10px; left: 20px; background: white; padding: 0 10px; font-size: 0.75rem; font-weight: 700; color: var(--primary-color); text-transform: uppercase; letter-spacing: 0.5px;">
-                            Analysis Reasoning
-                        </div>
-                        <div style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">${assessment.quality_tier_reasoning}</div>
-                    </div>
-                    ` : ''}
                     
                     <div class="metrics-grid">
                         <div class="metric-item">
@@ -7295,15 +6729,15 @@
                             <div class="metric-value">${assessment.aqs_score || 'N/A'}</div>
                         </div>
                         <div class="metric-item">
-                            <div class="metric-label">Type</div>
-                            <div class="metric-value">${assessment.assessment_type || 'N/A'}</div>
+                            <div class="metric-label">Assessment Type</div>
+                            <div class="metric-value" style="font-size: 0.9rem;">${assessment.assessment_type || 'N/A'}</div>
                         </div>
                         <div class="metric-item">
-                            <div class="metric-label">Difficulty</div>
+                            <div class="metric-label">Difficulty Level</div>
                             <div class="metric-value">${assessment.difficulty_level || 'N/A'}</div>
                         </div>
                         <div class="metric-item">
-                            <div class="metric-label">Course Fit</div>
+                            <div class="metric-label">Course Fit Score</div>
                             <div class="metric-value">${assessment.course_fit_score || 'N/A'}</div>
                         </div>
                     </div>
@@ -7396,111 +6830,6 @@
             `;
         }
         
-        function renderCourseMetadata(metadata) {
-            if (!metadata) return '';
-            
-            // Format date strings
-            const formatDate = (dateStr) => {
-                if (!dateStr) return 'N/A';
-                try {
-                    return new Date(dateStr).toLocaleDateString('en-US', { 
-                        year: 'numeric', 
-                        month: 'short', 
-                        day: 'numeric' 
-                    });
-                } catch {
-                    return dateStr;
-                }
-            };
-            
-            return `
-                <div class="detail-section" style="margin-bottom: 2rem;">
-                    <h3 style="margin-bottom: 1rem; color: var(--text-primary);">📋 Course Metadata</h3>
-                    <div class="metrics-grid">
-                        ${metadata.identifier ? `
-                            <div class="metric-item">
-                                <div class="metric-label">Identifier</div>
-                                <div class="metric-value">${metadata.identifier}</div>
-                            </div>
-                        ` : ''}
-                        ${metadata.name ? `
-                            <div class="metric-item">
-                                <div class="metric-label">Name</div>
-                                <div class="metric-value">
-                                    ${metadata.course_url ? 
-                                        `<a href="${metadata.course_url}" target="_blank" style="color: var(--primary-color); text-decoration: none; border-bottom: 1px dotted var(--primary-color);">${metadata.name}</a>` : 
-                                        metadata.name
-                                    }
-                                </div>
-                            </div>
-                        ` : ''}
-                        ${metadata.organisation ? `
-                            <div class="metric-item">
-                                <div class="metric-label">Organisation</div>
-                                <div class="metric-value">${metadata.organisation}</div>
-                            </div>
-                        ` : ''}
-                        ${metadata.primaryCategory ? `
-                            <div class="metric-item">
-                                <div class="metric-label">Primary Category</div>
-                                <div class="metric-value">${metadata.primaryCategory}</div>
-                            </div>
-                        ` : ''}
-                        ${metadata.contentType ? `
-                            <div class="metric-item">
-                                <div class="metric-label">Content Type</div>
-                                <div class="metric-value">${metadata.contentType}</div>
-                            </div>
-                        ` : ''}
-                        ${metadata.mimeType ? `
-                            <div class="metric-item">
-                                <div class="metric-label">MIME Type</div>
-                                <div class="metric-value">${metadata.mimeType}</div>
-                            </div>
-                        ` : ''}
-                        ${metadata.avgRating ? `
-                            <div class="metric-item">
-                                <div class="metric-label">Average Rating</div>
-                                <div class="metric-value">${metadata.avgRating} ⭐</div>
-                            </div>
-                        ` : ''}
-                        ${metadata.totalRatings ? `
-                            <div class="metric-item">
-                                <div class="metric-label">Total Ratings</div>
-                                <div class="metric-value">${metadata.totalRatings}</div>
-                            </div>
-                        ` : ''}
-                        ${metadata.createdOn ? `
-                            <div class="metric-item">
-                                <div class="metric-label">Created On</div>
-                                <div class="metric-value">${formatDate(metadata.createdOn)}</div>
-                            </div>
-                        ` : ''}
-                        ${metadata.lastUpdatedOn ? `
-                            <div class="metric-item">
-                                <div class="metric-label">Last Updated</div>
-                                <div class="metric-value">${formatDate(metadata.lastUpdatedOn)}</div>
-                            </div>
-                        ` : ''}
-                    </div>
-                    
-                    ${metadata.description ? `
-                        <div class="detail-item" style="margin-top: 1rem;">
-                            <div class="detail-label">Description</div>
-                            <div class="detail-value">${metadata.description}</div>
-                        </div>
-                    ` : ''}
-                    
-                    ${metadata.keywords && metadata.keywords.length > 0 ? `
-                        <div class="detail-item" style="margin-top: 1rem;">
-                            <div class="detail-label">Keywords</div>
-                            <div class="detail-value">${metadata.keywords.join(', ')}</div>
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-        }
-        
         function renderCourseFitDetails(details) {
             return `
                 <div class="collapsible">
@@ -7512,19 +6841,19 @@
                         <div class="metrics-grid">
                             <div class="metric-item">
                                 <div class="metric-label">Content Coverage</div>
-                                <div class="metric-value">${details.content_coverage_score ?? 'N/A'}</div>
+                                <div class="metric-value">${details.content_coverage_score || 'N/A'}</div>
                             </div>
                             <div class="metric-item">
                                 <div class="metric-label">Objective Alignment</div>
-                                <div class="metric-value">${details.objective_alignment_score ?? 'N/A'}</div>
+                                <div class="metric-value">${details.objective_alignment_score || 'N/A'}</div>
                             </div>
                             <div class="metric-item">
                                 <div class="metric-label">Difficulty Appropriateness</div>
-                                <div class="metric-value">${details.difficulty_appropriateness_score ?? 'N/A'}</div>
+                                <div class="metric-value">${details.difficulty_appropriateness_score || 'N/A'}</div>
                             </div>
                             <div class="metric-item">
                                 <div class="metric-label">Completeness</div>
-                                <div class="metric-value">${details.completeness_score ?? 'N/A'}</div>
+                                <div class="metric-value">${details.completeness_score || 'N/A'}</div>
                             </div>
                         </div>
                         
@@ -7685,38 +7014,15 @@
             return html;
         }
         
-        function getQualityBadge(tier, score) {
-            // Helper to determine tier if missing
-            if (!tier && score !== undefined) {
-                if (score >= 85) tier = 'Excellent';
-                else if (score >= 70) tier = 'Good';
-                else if (score >= 55) tier = 'Satisfactory';
-                else if (score >= 40) tier = 'Needs Improvement';
-                else tier = 'Poor';
-            }
-
-            // Normalize tier names
-            if (tier === 'Fair') tier = 'Satisfactory';
-
-            const descriptions = {
-                'Excellent': "Assessment demonstrates exceptional alignment, cognitive depth, and quality",
-                'Good': "Assessment meets quality standards with minor areas for improvement",
-                'Satisfactory': "Assessment is acceptable but has notable areas needing attention",
-                'Needs Improvement': "Assessment requires significant revisions to meet quality standards",
-                'Poor': "Assessment fails to meet minimum quality thresholds"
-            };
-
+        function getQualityBadge(tier) {
             const badges = {
                 'Excellent': { class: 'badge-excellent', text: 'Excellent' },
                 'Good': { class: 'badge-good', text: 'Good' },
-                'Satisfactory': { class: 'badge-satisfactory', text: 'Satisfactory' },
-                'Needs Improvement': { class: 'badge-needs-improvement', text: 'Needs Improvement' },
+                'Fair': { class: 'badge-fair', text: 'Fair' },
                 'Poor': { class: 'badge-poor', text: 'Poor' }
             };
             
-            const badge = badges[tier] || { class: 'badge-good', text: tier || 'N/A' };
-            badge.description = descriptions[tier] || "Quality metrics not available";
-            return badge;
+            return badges[tier] || { class: 'badge-good', text: tier || 'N/A' };
         }
         
         // Initialize on page load

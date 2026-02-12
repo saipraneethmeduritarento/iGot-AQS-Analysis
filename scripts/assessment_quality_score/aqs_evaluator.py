@@ -208,7 +208,8 @@ class AQSResult:
     
     # Final Score
     aqs_score: float = 0.0
-    quality_tier: str = ""  # Excellent/Good/Satisfactory/Needs Improvement/Poor
+    AQS_quality_tier: str = ""  # Excellent/Good/Satisfactory/Needs Improvement/Poor
+    quality_tier_reasoning: str = ""  # Explanation of why this tier was chosen
     
     # Flags and Warnings
     confidence_flags: list[str] = field(default_factory=list)
@@ -238,7 +239,8 @@ class AQSResult:
             
             # Final Score
             "aqs_score": self.aqs_score,
-            "quality_tier": self.quality_tier,
+            "AQS_quality_tier": self.AQS_quality_tier,
+            "quality_tier_reasoning": self.quality_tier_reasoning,
             
             # Flags and Warnings
             "confidence_flags": self.confidence_flags,
@@ -361,6 +363,8 @@ class AQSEvaluator:
             metrics.successful_calls += 1
         else:
             metrics.failed_calls += 1
+            if "error" in combined_result:
+                result.warnings.append(f"LLM Analysis Failed: {combined_result['error']}")
 
         # Extract difficulty analysis results
         difficulty_result = combined_result.get("difficulty_analysis", {})
@@ -427,7 +431,13 @@ class AQSEvaluator:
         )
         
         # Determine quality tier based on AQS score
-        result.quality_tier = self._get_quality_tier(result.aqs_score)
+        result.AQS_quality_tier = self._get_aqs_quality_tier(result.aqs_score)
+        
+        # Extract quality tier reasoning from LLM result
+        result.quality_tier_reasoning = combined_result.get("quality_tier_reasoning", "")
+        if not result.quality_tier_reasoning:
+             # Fallback if LLM didn't provide reasoning
+             result.quality_tier_reasoning = f"Assessment score of {result.aqs_score} falls within the {result.AQS_quality_tier} range."
 
         # Finalize metrics
         end_time = time.time()
@@ -512,6 +522,11 @@ class AQSEvaluator:
 
         # Simple mismatch detection based on difficulty appropriateness score
         appropriateness = fit_result.get("difficulty_appropriateness_score", 100)
+        
+        # Handle None values - treat as perfect alignment to avoid errors
+        if appropriateness is None:
+            appropriateness = 100
+            
         if appropriateness < (100 - threshold):
             alert = self.prompt_manager.get_edge_case_warning(
                 "difficulty_mismatch",
@@ -652,7 +667,7 @@ class AQSEvaluator:
 
         return round(min(100, max(0, aqs)), 2)
 
-    def _get_quality_tier(self, aqs_score: float) -> str:
+    def _get_aqs_quality_tier(self, aqs_score: float) -> str:
         """
         Determine quality tier based on AQS score.
         
@@ -713,7 +728,7 @@ class AQSEvaluator:
 
         except Exception as e:
             print(f"Error in {analysis_type}: {e}")
-            return {}, metrics, False
+            return {"error": str(e)}, metrics, False
 
     def _extract_json(self, text: str) -> dict:
         """Extract JSON object from LLM response text."""

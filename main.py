@@ -68,7 +68,7 @@ def result_to_txt(result: dict, course_name: str = "") -> str:
     lines.append("SCORES")
     lines.append("-" * 40)
     lines.append(f"  AQS Score: {result.get('aqs_score', 0)}/100")
-    lines.append(f"  Quality Tier: {result.get('quality_tier', 'N/A')}")
+    lines.append(f"  AQS Quality Tier: {result.get('aqs_quality_tier', 'N/A')}")
     lines.append(f"  Difficulty Level: {result.get('difficulty_level', 'N/A')}")
     lines.append(f"  Course Fit: {result.get('course_fit_status', 'N/A')} ({result.get('course_fit_score', 0)})")
     lines.append("")
@@ -663,8 +663,8 @@ Examples:
     parser.add_argument(
         "--output-dir",
         type=str,
-        default="./outputs/4/assessment_quality_score",
-        help="Path to output directory (default: ./outputs/4/assessment_quality_score)"
+        default="./outputs/5/assessment_quality_score",
+        help="Path to output directory (default: ./outputs/5/assessment_quality_score)"
     )
 
     parser.add_argument(

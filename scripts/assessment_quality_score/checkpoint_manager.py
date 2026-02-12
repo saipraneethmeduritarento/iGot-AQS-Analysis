@@ -14,7 +14,7 @@ from datetime import datetime
 class CheckpointManager:
     """Manages checkpoints for AQS evaluation progress."""
     
-    def __init__(self, checkpoint_dir: str = "./outputs/4/assessment_quality_score/.checkpoints"):
+    def __init__(self, checkpoint_dir: str = "./outputs/5/assessment_quality_score/.checkpoints"):
         """
         Initialize checkpoint manager.
         

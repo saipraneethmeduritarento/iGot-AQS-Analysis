@@ -16,8 +16,8 @@ def collect_json_data(base_dir):
     """Collect all JSON data organized by model and do_id."""
     data_structure = defaultdict(lambda: defaultdict(dict))
     
-    # Search in the new outputs/4/assessment_quality_score folder
-    output_path = base_dir / 'outputs' / '4' / 'assessment_quality_score'
+    # Search in the new outputs/5/assessment_quality_score folder
+    output_path = base_dir / 'outputs' / '5' / 'assessment_quality_score'
     
     if not output_path.exists():
         print(f"Warning: Directory not found: {output_path}")
@@ -47,48 +47,6 @@ def collect_json_data(base_dir):
                 print(f"Error reading {json_file}: {e}")
     
     return data_structure
-
-
-def load_course_metadata(base_dir, data_structure):
-    """Load metadata.json files from data/data_point/{do_id}/ folders."""
-    data_point_dir = base_dir / 'data' / 'data_point'
-    
-    if not data_point_dir.exists():
-        print(f"Warning: data_point directory not found: {data_point_dir}")
-        return data_structure
-    
-    # Iterate through each do_id folder
-    for do_id_folder in data_point_dir.iterdir():
-        if do_id_folder.is_dir():
-            do_id = do_id_folder.name
-            metadata_file = do_id_folder / 'metadata.json'
-            link_file = do_id_folder / 'link.txt'
-            
-            if metadata_file.exists():
-                try:
-                    with open(metadata_file, 'r', encoding='utf-8') as f:
-                        metadata = json.load(f)
-                    
-                    # Read link.txt if it exists
-                    if link_file.exists():
-                        try:
-                            with open(link_file, 'r', encoding='utf-8') as f:
-                                link_url = f.read().strip()
-                                if link_url:
-                                    metadata['course_url'] = link_url
-                        except Exception as e:
-                            print(f"Error reading link.txt for {do_id}: {e}")
-                    
-                    # Add metadata to all models that have this do_id
-                    for model_name in data_structure:
-                        if do_id in data_structure[model_name]:
-                            data_structure[model_name][do_id]['course_metadata.json'] = metadata
-                            
-                except Exception as e:
-                    print(f"Error reading metadata for {do_id}: {e}")
-    
-    return data_structure
-
 
 
 def generate_html_report(data_structure, output_file):
@@ -135,10 +93,6 @@ def main():
     
     print("Collecting JSON data from output folders...")
     data_structure = collect_json_data(base_dir)
-    
-    print("Loading course metadata...")
-    data_structure = load_course_metadata(base_dir, data_structure)
-    
     
     # Count total files
     total_files = sum(
