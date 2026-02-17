@@ -16,13 +16,13 @@ import yaml
 class PromptManager:
     """Manages loading and formatting of system prompts from YAML configuration."""
 
-    def __init__(self, prompts_dir: Optional[str] = None, version: str = "v3"):
+    def __init__(self, prompts_dir: Optional[str] = None, version: str = "v4"):
         """
         Initialize the prompt manager.
 
         Args:
             prompts_dir: Path to the prompts directory. Defaults to project prompts folder.
-            version: Version of prompts to use (v1, v2, etc.). Defaults to v2.
+            version: Version of prompts to use (v1, v2, etc.). Defaults to v4.
         """
         self.version = version
         if prompts_dir is None:

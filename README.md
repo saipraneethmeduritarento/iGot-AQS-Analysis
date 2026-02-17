@@ -128,6 +128,10 @@ python main.py --course do_113955620332421120130 --force-restart
 
 python main.py --course do_113955620332421120130 --verbose
 
+# Evaluate all courses with multiple models
+
+python main.py --all --multi-model
+
 ```
 
 ### Output Format

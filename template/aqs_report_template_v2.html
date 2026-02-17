@@ -328,8 +328,6 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
             line-height: 1.4;
-            overflow-wrap: break-word;
-            word-break: break-word;
         }
 
         .legend-dot {
@@ -395,8 +393,6 @@
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--text-primary);
-            overflow-wrap: break-word;
-            word-break: break-word;
         }
         
         .badge-info {
@@ -522,8 +518,6 @@
         .detail-value {
             color: var(--text-primary);
             line-height: 1.6;
-            overflow-wrap: break-word;
-            word-break: break-word;
         }
         
         .suggestions-list {
@@ -587,8 +581,6 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
             line-height: 1.5;
-            overflow-wrap: break-word;
-            word-break: break-word;
         }
         
         .scores-grid {
@@ -617,8 +609,6 @@
             font-size: 1.25rem;
             font-weight: 700;
             color: var(--primary-color);
-            overflow-wrap: break-word;
-            word-break: break-word;
         }
         
         .log-entry {
@@ -744,8 +734,6 @@
             margin-bottom: 2rem;
             color: var(--text-primary);
             box-shadow: var(--shadow-lg);
-            overflow-wrap: break-word;
-            word-break: break-word;
         }
         
         .input-data-title {
@@ -755,8 +743,6 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            overflow-wrap: break-word;
-            word-break: break-word;
         }
         
         .input-data-grid {
@@ -894,42 +880,19 @@
                 doIds.forEach(doId => {
                     const option = document.createElement('option');
                     option.value = doId;
-                    
-                    const metadata = DATA[currentModel][doId]['course_metadata.json'];
-                    const category = metadata?.primaryCategory || '';
-                    const courseName = metadata?.name ? ` - ${metadata.name}` : '';
-                    
-                    option.textContent = category 
-                        ? `${doId} (${category})` 
-                        : (metadata?.name ? `${doId}${courseName}` : doId);
-                        
+                    option.textContent = doId;
                     newDoIdSelect.appendChild(option);
                 });
             } else {
                 const allDoIds = new Set();
-                const doIdToCategory = {};
-                
                 Object.values(DATA).forEach(modelData => {
-                    Object.entries(modelData).forEach(([doId, data]) => {
-                        allDoIds.add(doId);
-                        if (!doIdToCategory[doId] && data['course_metadata.json']) {
-                             const meta = data['course_metadata.json'];
-                             if (meta.primaryCategory) {
-                                 doIdToCategory[doId] = meta.primaryCategory;
-                             } else if (meta.name) {
-                                 doIdToCategory[doId] = ` - ${meta.name}`; // Fallback to name if category missing
-                             }
-                        }
-                    });
+                    Object.keys(modelData).forEach(doId => allDoIds.add(doId));
                 });
                 
                 Array.from(allDoIds).sort().forEach(doId => {
                     const option = document.createElement('option');
                     option.value = doId;
-                    const displayInfo = doIdToCategory[doId] || '';
-                    option.textContent = displayInfo.startsWith(' - ') 
-                        ? `${doId}${displayInfo}` 
-                        : (displayInfo ? `${doId} (${displayInfo})` : doId);
+                    option.textContent = doId;
                     newDoIdSelect.appendChild(option);
                 });
             }
@@ -992,74 +955,84 @@
                 });
             }
             
-            // I need to get metadata here to get the URL
-            const metadata = item.data['course_metadata.json'];
-            const courseUrl = metadata?.course_url || '#';
-            
             inputDataSection.innerHTML = `
                 <div class="input-data-section">
                     <div class="input-data-title">
                         📂 Input Data Sources - ${item.doId}
                     </div>
                     <div style="margin-bottom: 1rem; opacity: 0.9; line-height: 1.6;">
-                        <div><strong>📚 ${metadata?.name || courseName}</strong></div>
-                        ${metadata?.course_url ? `<div style="margin-top: 0.25rem;"><a href="${metadata.course_url}" target="_blank" style="color: var(--primary-color); text-decoration: none; border-bottom: 1px dotted var(--primary-color); font-size: 1.3rem;"> View Course</a></div>` : ''}
+                        <div><strong>📚 ${courseName}</strong></div>
+                        <div style="font-size: 0.9rem; margin-top: 0.25rem;">
+                            ✅ ${assessmentCount} assessment${assessmentCount !== 1 ? 's' : ''} analyzed • 
+                            ❓ ${totalQuestions} total question${totalQuestions !== 1 ? 's' : ''} 
+                        </div>
+                    </div>
+                                            <div class="input-data-card">
+                            <div class="input-data-card-title">
+                                ⚙️ Configuration
+                            </div>
+                            <div class="input-data-card-desc">
+                                System prompts and evaluation parameters
+                            </div>
+                            <div class="input-data-card-files">
+                                <div class="input-data-file">📜 aqs_system_prompts.yaml: v3</div>
+                            </div>
+                        </div>
+                    <div class="input-data-grid">
+                        <div class="input-data-card">
+                            <div class="input-data-card-title">
+                                📝 Assessment Files
+                            </div>
+                            <div class="input-data-card-desc">
+                                ${assessmentCount} assessment${assessmentCount !== 1 ? 's' : ''} processed from:
+                            </div>
+                            <div class="input-data-card-files">
+                                ${assessmentNames.map(name => `
+                                    <div style="margin-bottom: 0.5rem;">
+                                        <div style="font-weight: 600; font-size: 0.85rem; margin-bottom: 0.25rem;">📋 ${name}</div>
+                                        <div class="input-data-file">🔍 assessment_questions.txt</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
                         
-                        <div style="font-size: 0.9rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.3rem;">
-                            <div>✅ ${assessmentCount} assessment${assessmentCount !== 1 ? 's' : ''} analyzed</div>
-                            <div>❓ ${totalQuestions} total question${totalQuestions !== 1 ? 's' : ''}</div>
-                        </div>
-
-                        ${(metadata?.description || metadata?.objectives || metadata?.difficultyLevel || metadata?.duration || (metadata?.keywords && metadata.keywords.length > 0) || (metadata?.competencies && metadata.competencies.length > 0)) ? `
-                        <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-                            
-                            ${metadata.description ? `
-                            <div style="margin-bottom: 1rem;">
-                                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.2rem; font-weight: 600;">DESCRIPTION</div>
-                                <div style="font-size: 0.9rem; line-height: 1.5;">${metadata.description}</div>
-                            </div>` : ''}
-
-                            ${metadata.objectives ? `
-                            <div style="margin-bottom: 1rem;">
-                                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.2rem; font-weight: 600;">OBJECTIVES</div>
-                                <div style="font-size: 0.9rem; line-height: 1.5;">${metadata.objectives}</div>
-                            </div>` : ''}
-
-                            ${metadata.difficultyLevel ? `
-                            <div style="margin-bottom: 1rem;">
-                                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.2rem; font-weight: 600;">DIFFICULTY LEVEL</div>
-                                <div style="font-size: 0.9rem;">${metadata.difficultyLevel}</div>
-                            </div>` : ''}
-
-                            ${metadata.duration ? `
-                            <div style="margin-bottom: 1rem;">
-                                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.2rem; font-weight: 600;">DURATION</div>
-                                <div style="font-size: 0.9rem;">${metadata.duration}</div>
-                            </div>` : ''}
-
-                            ${metadata.keywords && metadata.keywords.length > 0 ? `
-                            <div style="margin-bottom: 1rem;">
-                                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.2rem; font-weight: 600;">TAGS</div>
-                                <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
-                                    ${metadata.keywords.map(k => `<span style="background: #f1f5f9; color: var(--text-secondary); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; border: 1px solid var(--border-color);">${k}</span>`).join('')}
+                        <div class="input-data-card">
+                            <div class="input-data-card-title">
+                                📚 Course Content
+                            </div>
+                            <div class="input-data-card-desc">
+                                Course materials and metadata for alignment analysis
+                            </div>
+                            <div class="input-data-card-files">
+                                <div class="input-data-file">📂 courses/content/* files</div>
+                                <div class="input-data-file">🗒️ Metadata.json</div>
+                                <div style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.8;">
                                 </div>
-                            </div>` : ''}
-
-                            ${metadata.competencies && metadata.competencies.length > 0 ? `
-                            <div style="margin-bottom: 1rem;">
-                                <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.2rem; font-weight: 600;">COMPETENCIES</div>
-                                <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
-                                    ${[...new Set(metadata.competencies)].map(c => `<span style="background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; border: 1px solid #bae6fd;">${c}</span>`).join('')}
-                                </div>
-                            </div>` : ''}
+                            </div>
                         </div>
-                        ` : ''}
+                        
+                        <div class="input-data-card">
+                            <div class="input-data-card-title">
+                                🎬 Video Transcripts
+                            </div>
+                            <div class="input-data-card-desc">
+                                Subtitle files containing course video content
+                            </div>
+                            <div class="input-data-card-files">
+                                <div class="input-data-file">🌐 *.vtt</div>
+                                <div style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.8;">
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             `;
         }
         
-
+        
+        
+        
         function updateStats() {
             const statsSection = document.getElementById('statsSection');
             const filteredData = getFilteredData();
@@ -1274,7 +1247,6 @@
                     <h4 style="margin-bottom: 1rem; color: var(--text-secondary);">Bloom's Taxonomy Distribution</h4>
                     ${renderBloomsChart(bloomsScores)}
                 </div>
-                ${renderBloomsRationales(assessment.blooms_rationales)}
             `;
             
             // Bloom's Distribution Summary
@@ -1333,23 +1305,19 @@
                 <div class="scores-grid">
                     <div class="score-item">
                         <div class="score-label">Complexity</div>
-                        <div class="score-value">${formatScore(scores.complexity_score, 10)}</div>
-                        ${scores.complexity_rationale ? `<div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.4;">${scores.complexity_rationale}</div>` : ''}
+                        <div class="score-value">${scores.complexity_score || 'N/A'}</div>
                     </div>
                     <div class="score-item">
                         <div class="score-label">Language</div>
-                        <div class="score-value">${formatScore(scores.language_difficulty_score, 10)}</div>
-                        ${scores.language_difficulty_rationale ? `<div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.4;">${scores.language_difficulty_rationale}</div>` : ''}
+                        <div class="score-value">${scores.language_difficulty_score || 'N/A'}</div>
                     </div>
                     <div class="score-item">
                         <div class="score-label">Cognitive Effort</div>
-                        <div class="score-value">${formatScore(scores.cognitive_effort_score, 10)}</div>
-                        ${scores.cognitive_effort_rationale ? `<div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.4;">${scores.cognitive_effort_rationale}</div>` : ''}
+                        <div class="score-value">${scores.cognitive_effort_score || 'N/A'}</div>
                     </div>
                     <div class="score-item">
                         <div class="score-label">Course Alignment</div>
-                        <div class="score-value">${formatScore(scores.course_alignment_score, 10)}</div>
-                        ${scores.course_alignment_rationale ? `<div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.4;">${scores.course_alignment_rationale}</div>` : ''}
+                        <div class="score-value">${scores.course_alignment_score || 'N/A'}</div>
                     </div>
                 </div>
             `;
@@ -1386,7 +1354,10 @@
                             <div class="metric-item">
                                 <div class="metric-label">Name</div>
                                 <div class="metric-value">
-                                    ${metadata.name}
+                                    ${metadata.course_url ? 
+                                        `<a href="${metadata.course_url}" target="_blank" style="color: var(--primary-color); text-decoration: none; border-bottom: 1px dotted var(--primary-color);">${metadata.name}</a>` : 
+                                        metadata.name
+                                    }
                                 </div>
                             </div>
                         ` : ''}
@@ -1468,23 +1439,19 @@
                         <div class="metrics-grid">
                             <div class="metric-item">
                                 <div class="metric-label">Content Coverage</div>
-                                <div class="metric-value">${formatScore(details.content_coverage_score, 100)}</div>
-                                ${details.content_coverage_rationale ? `<div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.4;">${details.content_coverage_rationale}</div>` : ''}
+                                <div class="metric-value">${details.content_coverage_score ?? 'N/A'}</div>
                             </div>
                             <div class="metric-item">
                                 <div class="metric-label">Objective Alignment</div>
-                                <div class="metric-value">${formatScore(details.objective_alignment_score, 100)}</div>
-                                ${details.objective_alignment_rationale ? `<div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.4;">${details.objective_alignment_rationale}</div>` : ''}
+                                <div class="metric-value">${details.objective_alignment_score ?? 'N/A'}</div>
                             </div>
                             <div class="metric-item">
                                 <div class="metric-label">Difficulty Appropriateness</div>
-                                <div class="metric-value">${formatScore(details.difficulty_appropriateness_score, 100)}</div>
-                                ${details.difficulty_appropriateness_rationale ? `<div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.4;">${details.difficulty_appropriateness_rationale}</div>` : ''}
+                                <div class="metric-value">${details.difficulty_appropriateness_score ?? 'N/A'}</div>
                             </div>
                             <div class="metric-item">
                                 <div class="metric-label">Completeness</div>
-                                <div class="metric-value">${formatScore(details.completeness_score, 100)}</div>
-                                ${details.completeness_rationale ? `<div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.4;">${details.completeness_rationale}</div>` : ''}
+                                <div class="metric-value">${details.completeness_score ?? 'N/A'}</div>
                             </div>
                         </div>
                         
@@ -1547,6 +1514,10 @@
                     <div class="detail-section">
                         <div class="metrics-grid">
                             <div class="metric-item">
+                                <div class="metric-label">Duration</div>
+                                <div class="metric-value">${duration}s</div>
+                            </div>
+                            <div class="metric-item">
                                 <div class="metric-label">Input Tokens</div>
                                 <div class="metric-value">${metrics.token_usage?.input_tokens?.toLocaleString() || 'N/A'}</div>
                             </div>
@@ -1567,7 +1538,17 @@
                                 <div class="metric-value">${metrics.token_usage?.total_tokens?.toLocaleString() || 'N/A'}</div>
                             </div>
                         </div>
-
+                        
+                        <div class="detail-item" style="margin-top: 1rem;">
+                            <div class="detail-label">Start Time</div>
+                            <div class="detail-value">${startTime}</div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-label">End Time</div>
+                            <div class="detail-value">${endTime}</div>
+                        </div>
+                        
                         ${metrics.llm_calls ? `
                             <div class="detail-item">
                                 <div class="detail-label">LLM Calls</div>
@@ -1606,49 +1587,6 @@
             return html;
         }
         
-        function formatScore(score, max) {
-            if (score === undefined || score === null) return 'N/A';
-            return `${score}/${max}`;
-        }
-
-        function renderBloomsRationales(rationales) {
-            if (!rationales) return '';
-            
-            const levels = ['remember', 'understand', 'apply', 'analyze', 'evaluate', 'create'];
-            let hasContent = false;
-            
-            let html = `
-                <div class="collapsible">
-                    <span>🧠 Bloom's Taxonomy Analysis</span>
-                    <span class="arrow">▶</span>
-                </div>
-                <div class="collapsible-content">
-                    <div class="detail-section">
-                        <div class="legend-grid">
-            `;
-            
-            levels.forEach(level => {
-                const rationale = rationales[level];
-                if (rationale) {
-                    hasContent = true;
-                    html += `
-                        <div class="detail-item">
-                            <div class="detail-label">${level.charAt(0).toUpperCase() + level.slice(1)}</div>
-                            <div class="detail-value">${rationale}</div>
-                        </div>
-                    `;
-                }
-            });
-            
-            html += `
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            return hasContent ? html : '';
-        }
-
         function getQualityBadge(tier, score) {
             // Helper to determine tier if missing
             if (!tier && score !== undefined) {

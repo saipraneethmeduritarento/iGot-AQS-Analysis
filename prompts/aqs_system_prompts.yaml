@@ -1137,3 +1137,446 @@ v3:
     evaluate: 3.0
     create: 3.5
     description: "Higher-order cognitive levels receive greater weight in scoring"
+
+v4:
+  system_role: |
+    You are an expert educational assessment evaluator for the iGOT (Integrated Government Online Training) platform.
+    Your role is to analyze course content and assessment data to generate comprehensive quality scores.
+    You must be objective, consistent, and base all judgments strictly on provided content.
+    Never assume or infer missing information - flag it as a warning instead.
+
+  # Combined analysis prompt - performs all evaluations in a single LLM call
+  combined_analysis:
+    prompt: |
+      Perform a comprehensive assessment quality evaluation covering Difficulty Analysis, Bloom's Taxonomy Classification, and Course Fit Analysis.
+
+      **Course Context:**
+      - Course Title: {course_title}
+      - Course Description: {course_description}
+      - Course Level: {course_level}
+      - Learning Objectives: {learning_objectives}
+      - Competencies: {competencies}
+
+      **Course Content Summary:**
+      {course_content_summary}
+
+      **Assessment Information:**
+      - Assessment Name: {assessment_name}
+      - Assessment Type: {assessment_type}
+      - Total Questions: {total_questions}
+      - Expected Duration: {expected_duration} minutes
+
+      **Questions:**
+      {questions_text}
+
+      ---
+
+      ## PART 1: Difficulty Analysis
+      Classify the assessment difficulty level as Basic, Intermediate, or Advanced.
+
+      **Evaluation Criteria:**
+      1. **Complexity of Questions**: Evaluate cognitive load required
+      2. **Language Difficulty**: Assess vocabulary and sentence structure complexity
+      3. **Required Cognitive Effort**: Determine mental processing requirements
+      4. **Alignment with Course Level**: Compare assessment difficulty to stated course level
+
+      ---
+
+      ## PART 2: Bloom's Taxonomy Analysis
+      Evaluate each question against Bloom's Taxonomy cognitive levels.
+
+      **Bloom's Taxonomy Levels (with action verbs):**
+      1. **Remember**: Recall facts, terms, concepts (list, define, identify, name, recall)
+      2. **Understand**: Explain ideas, interpret meaning (describe, explain, summarize, classify)
+      3. **Apply**: Use information in new situations (apply, demonstrate, solve, use)
+      4. **Analyze**: Draw connections, organize parts (analyze, compare, contrast, distinguish)
+      5. **Evaluate**: Justify decisions, make judgments (evaluate, critique, assess, justify)
+      6. **Create**: Produce new work, design solutions (create, design, develop, formulate)
+
+      **Instructions:**
+      1. Classify each question into ONE primary Bloom's level
+      2. Calculate percentage distribution across all levels
+      3. Provide overall cognitive depth assessment
+      4. Provide specific justification for each Bloom's level score in bullet points
+
+      ---
+
+      ## PART 3: Course Fit Analysis
+      Analyze the alignment between the assessment and the course content.
+
+      **Evaluation Criteria:**
+      1. **Content Coverage**: Do questions cover topics from the course?
+      2. **Objective Alignment**: Do questions test stated learning objectives?
+      3. **Difficulty Appropriateness**: Is assessment difficulty suitable for course level?
+      4. **Completeness**: Does assessment comprehensively test course material?
+
+      **Instructions:**
+      Analyze each criterion above and provide a specific rationale for the assigned score.
+
+      ---
+
+      ## OUTPUT FORMAT
+      Provide your complete analysis in the following JSON format. IMPORTANT: Include the input_metadata section to help users verify the data:
+      ```json
+      {
+        "input_metadata": {
+          "course_info": {
+            "course_name": "{course_title}",
+            "course_identifier": "Provide if available",
+            "difficulty_level": "{course_level}",
+            "competencies": {competencies},
+            "primary_category": "Provide if available",
+            "organization": "Provide if available"
+          },
+          "assessment_info": {
+            "assessment_name": "{assessment_name}",
+            "assessment_type": "{assessment_type}",
+            "total_questions": {total_questions},
+            "expected_duration_minutes": {expected_duration}
+          }
+        },
+        "difficulty_analysis": {
+          "difficulty_level": "Basic|Intermediate|Advanced",
+          "difficulty_rationale": "Clear explanation of classification reasoning",
+          "complexity_score": 1-10,
+          "complexity_rationale": "Explanation of question complexity",
+          "language_difficulty_score": 1-10,
+          "language_difficulty_rationale": "Explanation of language complexity",
+          "cognitive_effort_score": 1-10,
+          "cognitive_effort_rationale": "Explanation of cognitive effort required",
+          "course_alignment_score": 1-10,
+          "course_alignment_rationale": "Explanation of alignment with course level"
+        },
+        "blooms_taxonomy": {
+          "question_classifications": [
+            {
+              "question_number": 1,
+              "blooms_level": "Remember|Understand|Apply|Analyze|Evaluate|Create",
+              "justification": "Brief reason for classification"
+            }
+          ],
+          "blooms_scores": {
+            "remember": 0,
+            "understand": 0,
+            "apply": 0,
+            "analyze": 0,
+            "evaluate": 0,
+            "create": 0
+          },
+          "blooms_rationales": {
+            "remember": "Rationale for remember score...",
+            "understand": "Rationale for understand score...",
+            "apply": "Rationale for apply score...",
+            "analyze": "Rationale for analyze score...",
+            "evaluate": "Rationale for evaluate score...",
+            "create": "Rationale for create score..."
+          },
+          "blooms_distribution_summary": "Narrative summary of cognitive level distribution"
+        },
+        "course_fit": {
+          "course_fit_score": 0-100,
+          "course_fit_status": "Well-Aligned|Partially Aligned|Poorly Aligned|Too Easy|Too Advanced",
+          "content_coverage_score": 0-100,
+          "content_coverage_rationale": "Rationale for content coverage score",
+          "objective_alignment_score": 0-100,
+          "objective_alignment_rationale": "Rationale for objective alignment score",
+          "difficulty_appropriateness_score": 0-100,
+          "difficulty_appropriateness_rationale": "Rationale for difficulty appropriateness score",
+          "completeness_score": 0-100,
+          "completeness_rationale": "Rationale for completeness score",
+          "alignment_details": "Detailed explanation of alignment analysis",
+          "improvement_suggestions": ["List of suggestions if applicable"]
+        }
+      }
+      ```
+
+  # Standalone assessment prompt (no course fit analysis)
+  combined_analysis_standalone:
+    prompt: |
+      Perform a comprehensive assessment quality evaluation covering Difficulty Analysis and Bloom's Taxonomy Classification.
+      (Note: This is a standalone assessment without course materials, so Course Fit Analysis is not applicable.)
+
+      **Assessment Information:**
+      - Assessment Name: {assessment_name}
+      - Assessment Type: {assessment_type}
+      - Total Questions: {total_questions}
+      - Expected Duration: {expected_duration} minutes
+
+      **Questions:**
+      {questions_text}
+
+      ---
+
+      ## PART 1: Difficulty Analysis
+      Classify the assessment difficulty level as Basic, Intermediate, or Advanced.
+
+      **Evaluation Criteria:**
+      1. **Complexity of Questions**: Evaluate cognitive load required
+      2. **Language Difficulty**: Assess vocabulary and sentence structure complexity
+      3. **Required Cognitive Effort**: Determine mental processing requirements
+
+      ---
+
+      ## PART 2: Bloom's Taxonomy Analysis
+      Evaluate each question against Bloom's Taxonomy cognitive levels.
+
+      **Bloom's Taxonomy Levels (with action verbs):**
+      1. **Remember**: Recall facts, terms, concepts (list, define, identify, name, recall)
+      2. **Understand**: Explain ideas, interpret meaning (describe, explain, summarize, classify)
+      3. **Apply**: Use information in new situations (apply, demonstrate, solve, use)
+      4. **Analyze**: Draw connections, organize parts (analyze, compare, contrast, distinguish)
+      5. **Evaluate**: Justify decisions, make judgments (evaluate, critique, assess, justify)
+      6. **Create**: Produce new work, design solutions (create, design, develop, formulate)
+
+      **Instructions:**
+      1. Classify each question into ONE primary Bloom's level
+      2. Calculate percentage distribution across all levels
+      3. Provide overall cognitive depth assessment
+      4. Provide specific justification for each Bloom's level score in bullet points
+
+      ---
+
+      ## OUTPUT FORMAT
+      Provide your complete analysis in the following JSON format:
+      ```json
+      {
+        "input_metadata": {
+          "course_info": null,
+          "assessment_info": {
+            "assessment_name": "{assessment_name}",
+            "assessment_type": "{assessment_type}",
+            "total_questions": {total_questions},
+            "expected_duration_minutes": {expected_duration}
+          }
+        },
+        "difficulty_analysis": {
+          "difficulty_level": "Basic|Intermediate|Advanced",
+          "difficulty_rationale": "Clear explanation of classification reasoning",
+          "complexity_score": 1-10,
+          "complexity_rationale": "Explanation of question complexity",
+          "language_difficulty_score": 1-10,
+          "language_difficulty_rationale": "Explanation of language complexity",
+          "cognitive_effort_score": 1-10,
+          "cognitive_effort_rationale": "Explanation of cognitive effort required",
+          "course_alignment_score": 5
+        },
+        "blooms_taxonomy": {
+          "question_classifications": [
+            {
+              "question_number": 1,
+              "blooms_level": "Remember|Understand|Apply|Analyze|Evaluate|Create",
+              "justification": "Brief reason for classification"
+            }
+          ],
+          "blooms_scores": {
+            "remember": 0,
+            "understand": 0,
+            "apply": 0,
+            "analyze": 0,
+            "evaluate": 0,
+            "create": 0
+          },
+          "blooms_rationales": {
+            "remember": "Rationale...",
+            "understand": "Rationale...",
+            "apply": "Rationale...",
+            "analyze": "Rationale...",
+            "evaluate": "Rationale...",
+            "create": "Rationale..."
+          },
+          "blooms_distribution_summary": "Narrative summary of cognitive level distribution"
+        },
+        "course_fit": null
+      }
+      ```
+
+  final_aqs_computation:
+    prompt: |
+      Compute the final Assessment Quality Score (AQS) based on all evaluation components.
+
+      **Difficulty Analysis:**
+      - Level: {difficulty_level}
+      - Rationale: {difficulty_rationale}
+      - Scores: Complexity={complexity_score}, Language={language_score}, Cognitive={cognitive_score}, Alignment={alignment_score}
+
+      **Bloom's Taxonomy Results:**
+      - Scores: {blooms_scores}
+      - Distribution: {blooms_distribution}
+
+      **Course Fit Analysis:**
+      - Score: {course_fit_score}
+      - Status: {course_fit_status}
+
+      **AQS Calculation Formula:**
+      AQS = (Difficulty_Component × 0.25) + (Blooms_Component × 0.35) + (Course_Fit_Component × 0.40)
+
+      Where:
+      - Difficulty_Component = Average of (complexity, language, cognitive, alignment scores) × 10
+      - Blooms_Component = Weighted cognitive depth score (higher-order thinking = higher weight)
+      - Course_Fit_Component = course_fit_score
+
+      **IMPORTANT**: The AQS score is on a scale of 0-100. It is NOT a percentage.
+
+      **Output Format:**
+      ```json
+      {
+        "difficulty_component": 0-100,
+        "blooms_component": 0-100,
+        "course_fit_component": 0-100,
+        "aqs_score": 0-100,
+        "aqs_score_reasoning": "Explanation of why this specific score was chosen based on the evaluation components",
+        "score_breakdown": "Explanation of how final score was computed",
+        "AQS_quality_tier": "Excellent|Good|Satisfactory|Needs Improvement|Poor",
+        "quality_tier_reasoning": "Explanation of why this specific tier was chosen based on the score and criteria"
+      }
+      ```
+
+  edge_case_handlers:
+    missing_content:
+      prompt: |
+        The following content is missing from the evaluation context:
+        {missing_items}
+
+        Proceed with evaluation but flag reduced accuracy in the output.
+        Base analysis only on available content without assumptions.
+      warning_template: "Reduced accuracy: Missing {missing_type}. Analysis based on available data only."
+
+    few_questions:
+      threshold: 5
+      prompt: |
+        This assessment contains only {question_count} questions, which is below the recommended minimum of 5.
+        Flag low confidence in the evaluation results.
+      warning_template: "Low confidence: Assessment has only {question_count} questions. Results may not be statistically reliable."
+
+    standalone_assessment:
+      prompt: |
+        This is a standalone assessment without associated course materials.
+        Course-fit analysis is not applicable.
+        Focus evaluation on:
+        1. Internal consistency
+        2. Bloom's taxonomy distribution
+        3. Question quality
+      course_fit_status: "Not Applicable"
+
+    difficulty_mismatch:
+      threshold: 30
+      prompt: |
+        Significant mismatch detected between assessment difficulty and course level.
+        Assessment Difficulty: {assessment_difficulty}
+        Expected Course Level: {course_level}
+        Mismatch Score: {mismatch_score}
+
+        Generate a misalignment alert with recommendations.
+      alert_template: "ALERT: Assessment difficulty ({assessment_difficulty}) does not match course level ({course_level}). Consider revising assessment or updating course metadata."
+
+  output_schema:
+    description: "Structured JSON output format for AQS results with clear input metadata and scoring explanation"
+    format: |
+      {
+        "input_metadata": {
+          "course_info": {
+            "course_name": "",
+            "course_identifier": "",
+            "difficulty_level": "",
+            "competencies": [],
+            "primary_category": "",
+            "organization": ""
+          },
+          "assessment_info": {
+            "assessment_name": "",
+            "assessment_type": "",
+            "total_questions": 0,
+            "expected_duration_minutes": 0
+          }
+        },
+        "scoring_summary": {
+          "aqs_score": {
+            "value": 0,
+            "scale": "0-100",
+            "description": "Assessment Quality Score on a scale of 0-100 (NOT a percentage)"
+          },
+          "AQS_quality_tier": {
+            "tier": "Excellent|Good|Satisfactory|Needs Improvement|Poor",
+            "reasoning": "Explanation of why this tier was assigned",
+            "threshold_range": "Score range for this tier",
+            "all_tiers": {
+              "Excellent": "85-100",
+              "Good": "70-84",
+              "Satisfactory": "55-69",
+              "Needs Improvement": "40-54",
+              "Poor": "0-39"
+            }
+          },
+          "component_scores": {
+            "difficulty_component": 0,
+            "blooms_component": 0,
+            "course_fit_component": 0
+          }
+        },
+        "detailed_analysis": {
+          "difficulty_analysis": {
+            "difficulty_level": "",
+            "difficulty_rationale": "",
+            "complexity_score": 0,
+            "complexity_rationale": "",
+            "language_difficulty_score": 0,
+            "language_difficulty_rationale": "",
+            "cognitive_effort_score": 0,
+            "cognitive_effort_rationale": "",
+            "course_alignment_score": 0,
+            "course_alignment_rationale": ""
+          },
+          "blooms_taxonomy": {
+            "blooms_scores": {},
+            "blooms_rationales": {},
+            "blooms_distribution_summary": ""
+          },
+          "course_fit": {
+            "course_fit_score": 0,
+            "course_fit_status": "",
+            "content_coverage_score": 0,
+            "content_coverage_rationale": "",
+            "objective_alignment_score": 0,
+            "objective_alignment_rationale": "",
+            "difficulty_appropriateness_score": 0,
+            "difficulty_appropriateness_rationale": "",
+            "completeness_score": 0,
+            "completeness_rationale": "",
+            "alignment_details": "",
+            "improvement_suggestions": []
+          }
+        },
+        "confidence_flags": [],
+        "warnings": []
+      }
+
+  quality_tiers:
+    excellent:
+      min_score: 85
+      max_score: 100
+      description: "Assessment demonstrates exceptional alignment, cognitive depth, and quality"
+    good:
+      min_score: 70
+      max_score: 84
+      description: "Assessment meets quality standards with minor areas for improvement"
+    satisfactory:
+      min_score: 55
+      max_score: 69
+      description: "Assessment is acceptable but has notable areas needing attention"
+    needs_improvement:
+      min_score: 40
+      max_score: 54
+      description: "Assessment requires significant revisions to meet quality standards"
+    poor:
+      min_score: 0
+      max_score: 39
+      description: "Assessment fails to meet minimum quality thresholds"
+
+  blooms_weights:
+    remember: 1.0
+    understand: 1.5
+    apply: 2.0
+    analyze: 2.5
+    evaluate: 3.0
+    create: 3.5
+    description: "Higher-order cognitive levels receive greater weight in scoring"

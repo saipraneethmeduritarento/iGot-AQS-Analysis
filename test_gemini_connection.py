@@ -1,8 +1,7 @@
 
 import sys
 import json
-import vertexai
-from vertexai.generative_models import GenerativeModel
+from google import genai
 from pathlib import Path
 
 # Add scripts directory to path
@@ -27,13 +26,19 @@ except Exception as e:
     print(f"Error parsing model names: {e}")
     model_names = []
 
-vertexai.init(project=settings.google_project_id, location=settings.google_project_location)
+client = genai.Client(
+    vertexai=True,
+    project=settings.google_project_id,
+    location=settings.google_project_location
+)
 
 for model_name in model_names:
     print(f"\nTesting model: {model_name}")
     try:
-        model = GenerativeModel(model_name)
-        response = model.generate_content("Hello, can you hear me?")
+        response = client.models.generate_content(
+            model=model_name,
+            contents="Hello, can you hear me?"
+        )
         print(f"Success! Response: {response.text}")
     except Exception as e:
         print(f"Failed to connect to {model_name}: {e}")

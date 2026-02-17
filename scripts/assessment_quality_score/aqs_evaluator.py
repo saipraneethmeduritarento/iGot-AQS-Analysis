@@ -46,11 +46,12 @@ DEFAULT_PRICING = {
 
 
 @dataclass
-class   TokenMetrics:
+class TokenMetrics:
     """Token usage metrics for a single LLM call."""
     input_tokens: int = 0
     output_tokens: int = 0
     thinking_tokens: int = 0
+    cached_tokens: int = 0
     total_tokens: int = 0
     input_cost: float = 0.0
     output_cost: float = 0.0
@@ -62,6 +63,7 @@ class   TokenMetrics:
             input_tokens=self.input_tokens + other.input_tokens,
             output_tokens=self.output_tokens + other.output_tokens,
             thinking_tokens=self.thinking_tokens + other.thinking_tokens,
+            cached_tokens=self.cached_tokens + other.cached_tokens,
             total_tokens=self.total_tokens + other.total_tokens,
             input_cost=self.input_cost + other.input_cost,
             output_cost=self.output_cost + other.output_cost,
@@ -71,6 +73,11 @@ class   TokenMetrics:
     def calculate_cost(self, model_name: str) -> None:
         """Calculate cost based on token usage and model pricing."""
         pricing = MODEL_PRICING.get(model_name, DEFAULT_PRICING)
+        # Note: Currently ignoring cached token pricing unless explicitly added to MODEL_PRICING
+        # Cached input generally has a lower cost, but for now we'll stick to standard input pricing
+        # or just 0 if not specified, to avoid over-complicating. 
+        # Typically cached input is ~25% of standard input cost.
+        
         self.input_cost = (self.input_tokens / 1_000_000) * pricing["input"]
         self.output_cost = (self.output_tokens / 1_000_000) * pricing["output"]
         self.total_cost = self.input_cost + self.output_cost
@@ -92,6 +99,7 @@ class TokenEvaluationMetrics:
     total_input_tokens: int = 0
     total_output_tokens: int = 0
     total_thinking_tokens: int = 0
+    total_cached_tokens: int = 0
     total_tokens: int = 0
     
     # Cost totals
@@ -113,6 +121,7 @@ class TokenEvaluationMetrics:
         self.total_input_tokens = self.overall_tokens.input_tokens
         self.total_output_tokens = self.overall_tokens.output_tokens
         self.total_thinking_tokens = self.overall_tokens.thinking_tokens
+        self.total_cached_tokens = self.overall_tokens.cached_tokens
         self.total_tokens = self.overall_tokens.total_tokens
         self.total_input_cost = self.overall_tokens.input_cost
         self.total_output_cost = self.overall_tokens.output_cost
@@ -130,6 +139,7 @@ class TokenEvaluationMetrics:
                 "input_tokens": self.total_input_tokens,
                 "output_tokens": self.total_output_tokens,
                 "thinking_tokens": self.total_thinking_tokens,
+                "cached_tokens": self.total_cached_tokens,
                 "total_tokens": self.total_tokens
             },
             "cost": {
@@ -150,18 +160,26 @@ class TokenEvaluationMetrics:
 class DifficultyScores:
     """Difficulty analysis sub-scores."""
     complexity_score: float = 0.0
+    complexity_rationale: str = ""
     language_difficulty_score: float = 0.0
+    language_difficulty_rationale: str = ""
     cognitive_effort_score: float = 0.0
+    cognitive_effort_rationale: str = ""
     course_alignment_score: float = 0.0
+    course_alignment_rationale: str = ""
 
 
 @dataclass
 class CourseFitDetails:
     """Detailed course fit analysis."""
     content_coverage_score: float = 0.0
+    content_coverage_rationale: str = ""
     objective_alignment_score: float = 0.0
+    objective_alignment_rationale: str = ""
     difficulty_appropriateness_score: float = 0.0
+    difficulty_appropriateness_rationale: str = ""
     completeness_score: float = 0.0
+    completeness_rationale: str = ""
     alignment_details: str = ""
     improvement_suggestions: list[str] = field(default_factory=list)
 
@@ -186,6 +204,17 @@ class BloomsScores:
 
 
 @dataclass
+class BloomsRationales:
+    """Bloom's taxonomy rationales."""
+    remember: str = ""
+    understand: str = ""
+    apply: str = ""
+    analyze: str = ""
+    evaluate: str = ""
+    create: str = ""
+
+
+@dataclass
 class AQSResult:
     """Complete AQS evaluation result."""
     assessment_name: str = ""
@@ -198,6 +227,7 @@ class AQSResult:
     
     # Bloom's Taxonomy Analysis
     blooms_scores: BloomsScores = field(default_factory=BloomsScores)
+    blooms_rationales: BloomsRationales = field(default_factory=BloomsRationales)
     blooms_distribution_summary: str = ""
     question_classifications: list[QuestionClassification] = field(default_factory=list)
     
@@ -229,6 +259,7 @@ class AQSResult:
             
             # Bloom's Taxonomy Analysis
             "blooms_scores": asdict(self.blooms_scores),
+            "blooms_rationales": asdict(self.blooms_rationales),
             "blooms_distribution_summary": self.blooms_distribution_summary,
             "question_classifications": [asdict(qc) for qc in self.question_classifications],
             
@@ -285,11 +316,14 @@ class AQSEvaluator:
         self.model_name = model_name or settings.gemini_model_name
         
         # Configure Vertex AI
-        import vertexai
-        from vertexai.generative_models import GenerativeModel
+        from google import genai
+        from google.genai import types
         
-        vertexai.init(project=self.project_id, location=self.location)
-        self.model = GenerativeModel(self.model_name)
+        self.client = genai.Client(
+            vertexai=True,
+            project=self.project_id,
+            location=self.location
+        )
         self.prompt_manager = PromptManager(prompts_dir)
 
     def evaluate_assessment(
@@ -372,9 +406,13 @@ class AQSEvaluator:
         result.difficulty_rationale = difficulty_result.get("difficulty_rationale", "")
         result.difficulty_scores = DifficultyScores(
             complexity_score=difficulty_result.get("complexity_score", 0),
+            complexity_rationale=difficulty_result.get("complexity_rationale", ""),
             language_difficulty_score=difficulty_result.get("language_difficulty_score", 0),
+            language_difficulty_rationale=difficulty_result.get("language_difficulty_rationale", ""),
             cognitive_effort_score=difficulty_result.get("cognitive_effort_score", 0),
-            course_alignment_score=difficulty_result.get("course_alignment_score", 0)
+            cognitive_effort_rationale=difficulty_result.get("cognitive_effort_rationale", ""),
+            course_alignment_score=difficulty_result.get("course_alignment_score", 0),
+            course_alignment_rationale=difficulty_result.get("course_alignment_rationale", "")
         )
 
         # Extract Bloom's taxonomy results
@@ -387,6 +425,15 @@ class AQSEvaluator:
             analyze=blooms_scores.get("analyze", 0),
             evaluate=blooms_scores.get("evaluate", 0),
             create=blooms_scores.get("create", 0)
+        )
+        blooms_rationales = blooms_result.get("blooms_rationales", {})
+        result.blooms_rationales = BloomsRationales(
+            remember=blooms_rationales.get("remember", ""),
+            understand=blooms_rationales.get("understand", ""),
+            apply=blooms_rationales.get("apply", ""),
+            analyze=blooms_rationales.get("analyze", ""),
+            evaluate=blooms_rationales.get("evaluate", ""),
+            create=blooms_rationales.get("create", "")
         )
         result.blooms_distribution_summary = blooms_result.get(
             "blooms_distribution_summary", ""
@@ -413,9 +460,13 @@ class AQSEvaluator:
             result.course_fit_status = fit_result.get("course_fit_status", "")
             result.course_fit_details = CourseFitDetails(
                 content_coverage_score=fit_result.get("content_coverage_score", 0),
+                content_coverage_rationale=fit_result.get("content_coverage_rationale", ""),
                 objective_alignment_score=fit_result.get("objective_alignment_score", 0),
+                objective_alignment_rationale=fit_result.get("objective_alignment_rationale", ""),
                 difficulty_appropriateness_score=fit_result.get("difficulty_appropriateness_score", 0),
+                difficulty_appropriateness_rationale=fit_result.get("difficulty_appropriateness_rationale", ""),
                 completeness_score=fit_result.get("completeness_score", 0),
+                completeness_rationale=fit_result.get("completeness_rationale", ""),
                 alignment_details=fit_result.get("alignment_details", ""),
                 improvement_suggestions=fit_result.get("improvement_suggestions", [])
             )
@@ -700,17 +751,26 @@ class AQSEvaluator:
         Returns:
             Tuple of (parsed JSON response, token metrics, success flag)
         """
-        from vertexai.generative_models import GenerationConfig
+        from google.genai import types
         
         system_role = self.prompt_manager.get_system_role()
-        full_prompt = f"{system_role}\n\n{prompt}"
+        # For google-genai SDK, system instructions are passed in config, not prepended to prompt
+        # But to minimize changes to prompt structure, we can keep it prepended if the model supports it, 
+        # or better, use the system_instruction parameter if we want to be cleaner.
+        # However, the previous implementation prepended it: f"{system_role}\n\n{prompt}"
+        # Let's stick to the previous behavior for prompt fidelity, or use the proper config.
+        # The prompt_manager.get_system_role() returns a string. 
+        # Let's use the explicit system_instruction in GenerateContentConfig for better separation.
+        
         metrics = TokenMetrics()
 
         try:
-            response = self.model.generate_content(
-                full_prompt,
-                generation_config=GenerationConfig(
-                    temperature=0.1,  # Lower temperature for consistent analysis
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=system_role,
+                    temperature=0.1,
                 )
             )
 
@@ -719,8 +779,9 @@ class AQSEvaluator:
                 usage = response.usage_metadata
                 metrics.input_tokens = getattr(usage, 'prompt_token_count', 0) or 0
                 metrics.output_tokens = getattr(usage, 'candidates_token_count', 0) or 0
-                metrics.thinking_tokens = getattr(usage, 'cached_content_token_count', 0) or 0
-                metrics.total_tokens = getattr(usage, 'total_token_count', 0) or (metrics.input_tokens + metrics.output_tokens + metrics.thinking_tokens)
+                metrics.thinking_tokens = getattr(usage, 'thoughts_token_count', 0) or 0
+                metrics.cached_tokens = getattr(usage, 'cached_content_token_count', 0) or 0
+                metrics.total_tokens = getattr(usage, 'total_token_count', 0)
 
             # Extract JSON from response
             response_text = response.text

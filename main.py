@@ -164,6 +164,7 @@ def result_to_txt(result: dict, course_name: str = "") -> str:
         lines.append(f"  Input Tokens: {token_usage.get('input_tokens', 0):,}")
         lines.append(f"  Output Tokens: {token_usage.get('output_tokens', 0):,}")
         lines.append(f"  Thinking Tokens: {token_usage.get('thinking_tokens', 0):,}")
+        lines.append(f"  Cached Tokens: {token_usage.get('cached_tokens', 0):,}")
         lines.append(f"  Total Tokens: {token_usage.get('total_tokens', 0):,}")
         llm_calls = metrics.get('llm_calls', {})
         lines.append(f"  LLM Calls: {llm_calls.get('successful', 0)}/{llm_calls.get('total', 0)} successful")
@@ -232,6 +233,7 @@ def course_summary_to_txt(course_data: dict) -> str:
         lines.append(f"  Input Tokens:  {metrics.get('total_input_tokens', 0):,}")
         lines.append(f"  Output Tokens: {metrics.get('total_output_tokens', 0):,}")
         lines.append(f"  Thinking Tokens: {metrics.get('total_thinking_tokens', 0):,}")
+        lines.append(f"  Cached Tokens:   {metrics.get('total_cached_tokens', 0):,}")
         lines.append(f"  Total Tokens:  {metrics.get('total_tokens', 0):,}")
         lines.append(f"")
         lines.append(f"Cost Summary ({course_data.get('model_name', 'N/A')}):")
@@ -354,6 +356,7 @@ def evaluate_single_course(
         "total_input_tokens": 0,
         "total_output_tokens": 0,
         "total_thinking_tokens": 0,
+        "total_cached_tokens": 0,
         "total_tokens": 0,
         "total_input_cost_usd": 0.0,
         "total_output_cost_usd": 0.0,
@@ -386,6 +389,7 @@ def evaluate_single_course(
             course_metrics["total_input_tokens"] += metrics.total_input_tokens
             course_metrics["total_output_tokens"] += metrics.total_output_tokens
             course_metrics["total_thinking_tokens"] += metrics.total_thinking_tokens
+            course_metrics["total_cached_tokens"] += metrics.total_cached_tokens
             course_metrics["total_tokens"] += metrics.total_tokens
             course_metrics["total_input_cost_usd"] += metrics.total_input_cost
             course_metrics["total_output_cost_usd"] += metrics.total_output_cost
@@ -407,6 +411,7 @@ def evaluate_single_course(
             print(f"    📥 Input tokens: {metrics.total_input_tokens:,}")
             print(f"    📤 Output tokens: {metrics.total_output_tokens:,}")
             print(f"    🧠 Thinking tokens: {metrics.total_thinking_tokens:,}")
+            print(f"    💾 Cached tokens: {metrics.total_cached_tokens:,}")
             print(f"    📦 Total tokens: {metrics.total_tokens:,}")
             print(f"    💵 Cost: ${metrics.total_cost:.6f}")
             print(f"    🔄 LLM calls: {metrics.successful_calls}/{metrics.llm_calls} successful")
@@ -478,6 +483,7 @@ def evaluate_single_course(
     print(f"    📥 Total Input: {course_metrics['total_input_tokens']:,}")
     print(f"    📤 Total Output: {course_metrics['total_output_tokens']:,}")
     print(f"    🧠 Total Thinking: {course_metrics.get('total_thinking_tokens', 0):,}")
+    print(f"    💾 Total Cached: {course_metrics.get('total_cached_tokens', 0):,}")
     print(f"    📦 Grand Total: {course_metrics['total_tokens']:,}")
     print(f"\n  💰 Cost Summary:")
     print(f"    Input Cost:  ${course_metrics['total_input_cost_usd']:.6f}")
@@ -499,6 +505,7 @@ def evaluate_single_course(
                 "total_input_tokens": course_metrics["total_input_tokens"],
                 "total_output_tokens": course_metrics["total_output_tokens"],
                 "total_thinking_tokens": course_metrics["total_thinking_tokens"],
+                "total_cached_tokens": course_metrics["total_cached_tokens"],
                 "total_tokens": course_metrics["total_tokens"],
                 "total_input_cost_usd": course_metrics["total_input_cost_usd"],
                 "total_output_cost_usd": course_metrics["total_output_cost_usd"],
@@ -663,8 +670,8 @@ Examples:
     parser.add_argument(
         "--output-dir",
         type=str,
-        default="./outputs/5/assessment_quality_score",
-        help="Path to output directory (default: ./outputs/5/assessment_quality_score)"
+        default="./outputs/6/assessment_quality_score",
+        help="Path to output directory (default: ./outputs/6/assessment_quality_score)"
     )
 
     parser.add_argument(

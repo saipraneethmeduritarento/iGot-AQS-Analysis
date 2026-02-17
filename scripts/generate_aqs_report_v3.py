@@ -16,8 +16,8 @@ def collect_json_data(base_dir):
     """Collect all JSON data organized by model and do_id."""
     data_structure = defaultdict(lambda: defaultdict(dict))
     
-    # Search in the new outputs/6/assessment_quality_score folder
-    output_path = base_dir / 'outputs' / '6' / 'assessment_quality_score'
+    # Search in the new outputs/4/assessment_quality_score folder
+    output_path = base_dir / 'outputs' / '4' / 'assessment_quality_score'
     
     if not output_path.exists():
         print(f"Warning: Directory not found: {output_path}")

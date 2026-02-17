@@ -24,3 +24,11 @@ cost_estimation/
 prompts/aqs_system_prompts_v1.yaml
 
 libs/
+
+/create_token_breakdown.py
+/create_cost_breakdown.py
+/compare_tokens_5v6.py
+/analyze_aqs_results.py
+/aqs_analysis_summary.md
+/test_gemini.py
+/test_gemini_connection.py
